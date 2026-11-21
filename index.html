@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kolumbia 2026 · Anton Marci · EU v Bratislave</title>
+<meta name="description" content="Zahraničná pracovná cesta do Kolumbie 30. 10. - 18. 11. 2026: hosťovské prednášky na Universidad Externado de Colombia, Universidad del Valle a Pontificia Universidad Javeriana Cali, príspevok na kongrese REDICEAC 2026 v Ibagué.">
+<meta property="og:title" content="Kolumbia 2026 · Anton Marci">
+<meta property="og:description" content="Bogotá · Cali · Ibagué - prednášky, kongres REDICEAC 2026, fotografie, videá a spätná väzba študentov.">
+<meta property="og:image" content="img/bog-panorama.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2216%22 fill=%22%23f2b705%22/%3E%3Crect y=%2216%22 width=%2232%22 height=%228%22 fill=%22%231d4fa3%22/%3E%3Crect y=%2224%22 width=%2232%22 height=%228%22 fill=%22%23c8102e%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<style>
+:root{
+  color-scheme:light;
+  --paper:#fbf8f2; --paper-2:#f3ede1; --card:#ffffff;
+  --ink:#1d1b16; --ink-2:#4f4a40; --ink-3:#7a7366; --line:#e3dbcb;
+  --sun:#f2b705; --sun-soft:#fbe7a6; --andes:#173a2e; --andes-2:#24533f;
+  --link:#1d4fa3;
+  /* categorical (validated reference order) */
+  --c-lecture:#2a78d6; --c-congress:#eb6834; --c-online:#1baf7a; --c-travel:#eda100; --c-people:#e87ba4; --c-free:#9a9384;
+  --series-1:#2a78d6; --series-2:#eb6834;
+  --serif:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--link)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.mono{font-family:var(--mono)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.1;margin:0}
+h2{font-size:clamp(30px,4vw,46px);letter-spacing:-.01em}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.hl{background:linear-gradient(transparent 62%,var(--sun-soft) 62%)}
+section{padding:84px 0 24px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.sec-head p{max-width:560px;color:var(--ink-2);margin:10px 0 0}
+
+/* nav */
+.top{position:sticky;top:0;z-index:50;background:rgba(251,248,242,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:58px}
+.brand{font:600 18px var(--serif);text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand b{color:var(--andes-2)}
+.nav{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav a{font-size:14px;color:var(--ink-2);text-decoration:none;padding:6px 10px;border-radius:99px;white-space:nowrap}
+.nav a:hover{background:var(--paper-2);color:var(--ink)}
+.lang{display:flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;flex:none}
+.lang button{border:0;background:none;font:500 12px var(--mono);padding:6px 10px;cursor:pointer;color:var(--ink-2)}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+@media (max-width:820px){.nav{display:none}}
+
+/* hero */
+.hero{padding:0;position:relative;min-height:88vh;display:grid;align-items:end;color:#fff;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url(img/bog-panorama.jpg) center 40%/cover;transform:scale(1.04)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,15,.15) 0%,rgba(10,20,15,.2) 40%,rgba(10,22,16,.86) 100%)}
+.hero .wrap{position:relative;z-index:2;padding-bottom:56px;width:100%}
+.hero .eyebrow{color:rgba(255,255,255,.8)}
+.hero h1{font-size:clamp(56px,11vw,150px);font-weight:800;letter-spacing:-.03em;margin:14px 0 6px}
+.hero h1 span{color:var(--sun)}
+.hero .sub{font-size:clamp(17px,2vw,21px);max-width:720px;color:rgba(255,255,255,.92)}
+.route{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px;font:500 14px var(--mono)}
+.route i{display:inline-block;width:34px;height:1px;background:rgba(255,255,255,.6);position:relative}
+.route i::after{content:"";position:absolute;right:-1px;top:-3px;border:4px solid transparent;border-left-color:rgba(255,255,255,.8);border-right:0}
+.route span{padding:5px 10px;border:1px solid rgba(255,255,255,.4);border-radius:99px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:40px;border-top:1px solid rgba(255,255,255,.25)}
+.stat{padding:18px 16px 0 0}
+.stat b{display:block;font:700 clamp(30px,4vw,46px)/1 var(--serif)}
+.stat small{display:block;margin-top:6px;color:rgba(255,255,255,.78);font-size:13px;line-height:1.35}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.hero{min-height:auto;padding-top:120px}.hero::after{background:linear-gradient(180deg,rgba(10,20,15,.55),rgba(10,22,16,.9))}}
+
+/* timeline */
+.tl-legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--ink-2)}
+.tl-legend button{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:5px 11px;cursor:pointer;font:inherit;color:inherit}
+.tl-legend button[aria-pressed="false"]{opacity:.45}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 2px var(--card)}
+.strip{display:flex;gap:6px;overflow-x:auto;padding:16px 2px 14px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.day{flex:none;width:66px;scroll-snap-align:start;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 6px 8px;text-align:center;cursor:pointer;font:inherit;color:var(--ink);transition:transform .15s,box-shadow .15s}
+.day:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(30,25,10,.08)}
+.day[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.day .dw{font:500 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;opacity:.7}
+.day .dn{font:600 24px/1.05 var(--serif)}
+.day .dm{font:400 10px var(--mono);opacity:.7}
+.day .dots{display:flex;justify-content:center;gap:3px;margin-top:6px;min-height:8px}
+.day .dots .dot{width:7px;height:7px;box-shadow:none}
+.day .city{font-size:10px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.75}
+.tl-body{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;margin-top:8px}
+.tl-map{position:sticky;top:76px;align-self:start}
+@media (max-width:900px){.tl-body{grid-template-columns:1fr}.tl-map{position:static}#map{height:380px}}
+.leaflet-tile-pane{filter:grayscale(.55) sepia(.18) contrast(.95) brightness(1.04)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.panel-head{display:flex;justify-content:space-between;gap:12px;align-items:start;flex-wrap:wrap}
+.panel h3{font-size:28px}
+.panel .where{color:var(--ink-2);margin-top:4px}
+.ctrls{display:flex;gap:6px}
+.btn{border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:7px 13px;font:500 13px var(--sans);cursor:pointer;color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--paper-2)}
+.btn.primary{background:var(--andes);color:#fff;border-color:var(--andes)}
+.events{list-style:none;margin:18px 0 0;padding:0;border-left:2px solid var(--line)}
+.ev{position:relative;padding:0 0 18px 20px}
+.ev::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--evc,#999);box-shadow:0 0 0 3px var(--card)}
+.ev .t{font:500 12px var(--mono);color:var(--ink-3)}
+.ev .t em{font-style:normal;opacity:.75}
+.ev .k{display:inline-block;font:500 10.5px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);border:1px solid var(--line);border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:1px}
+.ev h4{margin:3px 0 2px;font:600 16.5px/1.35 var(--sans)}
+.ev h4 q{font-family:var(--serif);font-weight:600;font-style:italic;quotes:"„" "“"}
+.ev p{margin:2px 0 0;color:var(--ink-2);font-size:14.5px}
+.ev .links{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:12.5px;text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--ink);background:var(--paper)}
+.chip:hover{border-color:var(--ink-3)}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.thumbs button{padding:0;border:0;border-radius:10px;overflow:hidden;cursor:zoom-in;aspect-ratio:1;background:var(--paper-2);position:relative}
+.thumbs img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.thumbs button:hover img{transform:scale(1.05)}
+.play-badge{position:absolute;inset:auto 8px 8px auto;background:rgba(0,0,0,.6);color:#fff;font:500 11px var(--mono);padding:3px 7px;border-radius:99px}
+#map{height:560px;border-radius:var(--r);border:1px solid var(--line);z-index:1}
+.map-note{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.leaflet-container{font-family:var(--sans);background:#eef0ea}
+.pin{width:18px;height:18px;border-radius:50%;background:var(--andes);border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.pin.on{background:var(--sun);transform:scale(1.35)}
+.pin.minor{background:#9a9384;width:12px;height:12px;border-width:2px}
+.pin-label{font:600 12px var(--sans);color:var(--ink);background:rgba(255,255,255,.9);padding:1px 6px;border-radius:6px;white-space:nowrap;border:1px solid var(--line)}
+
+/* lectures */
+.lectures{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+.lec{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.lec .ph{aspect-ratio:16/9;background:var(--paper-2) center/cover}
+.lec .bd{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.lec .meta{font:500 12px var(--mono);color:var(--ink-3);display:flex;gap:10px;flex-wrap:wrap}
+.lec .inst{font-weight:600}
+.lec h3{font-size:21px;font-style:italic}
+.lec p{margin:0;color:var(--ink-2);font-size:14.5px}
+.lec .links{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
+.lec .score{display:flex;align-items:baseline;gap:6px;font-size:13px;color:var(--ink-2)}
+.lec .score b{font:700 22px var(--serif);color:var(--ink)}
+.tag{display:inline-block;font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:99px;color:#fff}
+
+/* students */
+.fb-grid{display:grid;grid-template-columns:320px 1fr;gap:22px}
+@media (max-width:900px){.fb-grid{grid-template-columns:1fr}}
+.big{background:var(--andes);color:#fff;border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:10px}
+.big .n{font:800 92px/0.9 var(--serif);letter-spacing:-.03em}
+.big .n small{font-size:30px;font-weight:600;opacity:.75}
+.big p{margin:0;color:rgba(255,255,255,.85);font-size:15px}
+.stars{display:flex;gap:4px}
+.stars svg{width:22px;height:22px}
+.chart-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px}
+.chart-card h3{font:600 18px var(--sans)}
+.chart-card .note{font-size:13px;color:var(--ink-3);margin:4px 0 14px}
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar-row{display:grid;grid-template-columns:190px 1fr 74px;gap:12px;align-items:center;position:relative}
+.bar-row .lab{font-size:14px;line-height:1.25}
+.bar-row .lab small{display:block;color:var(--ink-3);font-size:12px}
+.track{height:14px;position:relative}
+.track .grid{position:absolute;inset:0;background:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 20%);opacity:.8}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;background:var(--series-1);transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.bar-row .val{font:600 15px var(--mono);text-align:right}
+.bar-row .val small{display:block;font:400 11px var(--mono);color:var(--ink-3)}
+@media (max-width:560px){.bar-row{grid-template-columns:110px 1fr 58px}}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--paper);font-size:12.5px;padding:7px 10px;border-radius:8px;z-index:200;opacity:0;transition:opacity .12s;max-width:260px;line-height:1.4}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+.shift{display:flex;flex-direction:column;gap:22px}
+.shift .q{font-size:14.5px;font-weight:500;margin-bottom:8px}
+.shift .q small{display:block;font-weight:400;color:var(--ink-3);font-size:12.5px}
+.pair{display:grid;grid-template-columns:60px 1fr 46px;gap:10px;align-items:center;margin:5px 0;font-size:13px}
+.pair .fill.b{background:var(--series-1)}
+.pair .fill.a{background:var(--series-2)}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--ink-2);margin-bottom:12px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+details.tbl{margin-top:14px;font-size:13px}
+details.tbl summary{cursor:pointer;color:var(--ink-3)}
+details.tbl table{border-collapse:collapse;margin-top:8px;width:100%}
+details.tbl td,details.tbl th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left}
+details.tbl td:last-child,details.tbl th:last-child{text-align:right;font-family:var(--mono)}
+.quotes{margin-top:22px;position:relative}
+.qtrack{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:thin}
+.qcard{flex:none;width:min(380px,85vw);scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:12px}
+.qcard blockquote{margin:0;font:400 18px/1.45 var(--serif)}
+.qcard blockquote::before{content:"“";font-size:44px;line-height:0;vertical-align:-18px;color:var(--sun);margin-right:4px}
+.qcard .tr{font-size:13.5px;color:var(--ink-2);border-left:2px solid var(--line);padding-left:10px}
+.qcard .src{margin-top:auto;font:500 11.5px var(--mono);color:var(--ink-3);display:flex;justify-content:space-between;gap:8px}
+.qcard.con{background:var(--paper-2)}
+.qcard.con .src b{color:var(--ink-2)}
+
+/* gallery */
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 13px;font:500 13px var(--sans);cursor:pointer;color:var(--ink-2)}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.masonry{columns:4 240px;column-gap:12px;margin-top:18px}
+.masonry figure{break-inside:avoid;margin:0 0 12px;position:relative;border-radius:12px;overflow:hidden;cursor:zoom-in;background:var(--paper-2)}
+.masonry img{width:100%;height:auto;transition:transform .4s}
+.masonry figure:hover img{transform:scale(1.03)}
+.masonry figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;color:#fff;font-size:12.5px;background:linear-gradient(transparent,rgba(0,0,0,.65));opacity:0;transition:opacity .2s}
+.masonry figure:hover figcaption,.masonry figure:focus-within figcaption{opacity:1}
+.masonry figure .play-badge{opacity:1}
+
+/* media */
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.yt{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#111;cursor:pointer;border:0;padding:0;width:100%}
+.yt img{width:100%;height:100%;object-fit:cover;opacity:.85;transition:opacity .2s}
+.yt:hover img{opacity:1}
+.yt .pl{position:absolute;inset:0;display:grid;place-items:center}
+.yt .pl span{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center}
+.yt iframe{width:100%;height:100%;border:0;position:absolute;inset:0}
+.mcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.mcard .bd{padding:14px 16px 16px}
+.mcard h3{font:600 16px/1.35 var(--sans)}
+.mcard p{margin:4px 0 0;font-size:13.5px;color:var(--ink-2)}
+.reel{display:grid;grid-template-columns:150px 1fr;gap:0;text-decoration:none;color:inherit}
+.reel img{width:150px;height:100%;min-height:220px;object-fit:cover}
+.reel .bd{display:flex;flex-direction:column;gap:6px;justify-content:center}
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:22px}
+.vids button{position:relative;border:0;padding:0;border-radius:12px;overflow:hidden;aspect-ratio:9/16;cursor:pointer;background:#111}
+.vids img{width:100%;height:100%;object-fit:cover}
+.vids .cap{position:absolute;left:0;right:0;bottom:0;padding:30px 12px 12px;background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff;text-align:left;font-size:13px}
+.vids .cap b{display:block;font-size:14px}
+.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:22px}
+.res a{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.res a:hover{border-color:var(--ink-3)}
+.res a b{display:block;font-size:15px}
+.res a small{color:var(--ink-3);font:400 12px var(--mono)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(12,12,10,.94);z-index:300;display:none;align-items:center;justify-content:center}
+.lb.open{display:flex}
+.lb figure{margin:0;max-width:92vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:10px}
+.lb img,.lb video{max-width:92vw;max-height:80vh;border-radius:8px;object-fit:contain}
+.lb figcaption{color:#e8e4da;font-size:14px;text-align:center;max-width:720px}
+.lb figcaption small{display:block;color:#9e9888;font:400 12px var(--mono);margin-top:2px}
+.lb button{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;width:46px;height:46px;border-radius:50%;cursor:pointer;font-size:22px}
+.lb button:hover{background:rgba(255,255,255,.2)}
+.lb .x{top:18px;right:18px}.lb .pv{left:18px;top:50%}.lb .nx{right:18px;top:50%}
+
+footer{margin-top:80px;background:var(--andes);color:rgba(255,255,255,.86);padding:48px 0 40px;font-size:14px}
+footer .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:30px}
+footer h3{color:#fff;font-size:24px;margin-bottom:8px}
+footer a{color:#fff}
+footer small{color:rgba(255,255,255,.6)}
+@media (max-width:760px){footer .wrap{grid-template-columns:1fr}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.fill{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Kolumbia <b>2026</b></a>
+    <nav class="nav" aria-label="Sekcie">
+      <a href="#cesta" data-i18n="nav_tl">Časová os</a>
+      <a href="#prednasky" data-i18n="nav_lec">Prednášky</a>
+      <a href="#studenti" data-i18n="nav_stu">Hlas študentov</a>
+      <a href="#galeria" data-i18n="nav_gal">Galéria</a>
+      <a href="#media" data-i18n="nav_med">Videá a odkazy</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Jazyk / Idioma / Language">
+      <button data-lang="sk" aria-pressed="true">SK</button><button data-lang="es" aria-pressed="false">ES</button><button data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="eyebrow" data-i18n="hero_eyebrow">Zahraničná pracovná cesta · 30. 10. - 18. 11. 2026</div>
+    <h1>Kolumbia <span>2026</span></h1>
+    <p class="sub" data-i18n="hero_sub">Hosťovské prednášky o dani z príjmov a minimálnych daniach na troch kolumbijských univerzitách a príspevok na kongrese REDICEAC 2026. Ing. Anton Marci, PhD., Katedra účtovníctva a audítorstva FHI, Ekonomická univerzita v Bratislave.</p>
+    <div class="route"><span>Bratislava</span><i></i><span>Bogotá</span><i></i><span>Cali</span><i></i><span>Ibagué</span><i></i><span>Bratislava</span></div>
+    <div class="stats">
+      <div class="stat"><b data-count="20">20</b><small data-i18n="st_days">dní na ceste</small></div>
+      <div class="stat"><b data-count="4">4</b><small data-i18n="st_unis">inštitúcie: Externado, Univalle, Javeriana Cali, UNIMINUTO</small></div>
+      <div class="stat"><b>4 + 1</b><small data-i18n="st_talks">hosťovské prednášky a kongresový príspevok</small></div>
+      <div class="stat"><b data-count="55">55</b><small data-i18n="st_resp">hodnotení študentov v Slido</small></div>
+      <div class="stat"><b><span class="dec" data-v="4.9">4,9</span><span style="font-size:.5em;opacity:.7">/5</span></b><small data-i18n="st_avg">priemerné hodnotenie prednášok</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="cesta">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow" data-i18n="tl_eyebrow">Deň po dni</div>
+        <h2 data-i18n="tl_h">Interaktívna <span class="hl">časová os</span></h2>
+        <p data-i18n="tl_p">Vyberte deň: uvidíte, kde som bol, o čom som rozprával, s kým som sa stretol a čo zostalo na fotkách. Časy sú miestne (Kolumbia, UTC-5), v zátvorke slovenský čas.</p>
+      </div>
+      <div class="tl-legend" id="legend"></div>
+    </div>
+    <div class="strip" id="strip" role="tablist" aria-label="Dni"></div>
+    <div class="tl-body">
+      <article class="panel" id="panel" aria-live="polite"></article>
+      <div class="tl-map">
+        <div id="map" role="img" aria-label="Mapa trasy"></div>
+        <div class="map-note" data-i18n="map_note">Kliknutím na mesto na mape prejdete na príslušné dni. Prerušovaná čiara = let, plná = cesta autom.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="prednasky">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow" data-i18n="lec_eyebrow">Čo som prednášal</div>
+        <h2 data-i18n="lec_h">Prednášky a <span class="hl">kongres</span></h2>
+        <p data-i18n="lec_p">Spoločná niť: ako krajiny zdaňujú zisk firiem, prečo zavádzajú minimálne dane a čo to robí s vykazovaním strát. Prednášal som v angličtine s podkladmi v španielčine a angličtine, so Slido otázkami a študentskou aplikáciou na praktické cvičenie.</p>
+      </div>
+    </div>
+    <div class="lectures" id="lectures"></div>
+  </div>
+</section>
+
+<section id="studenti">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow" data-i18n="stu_eyebrow">Spätná väzba v Slido</div>
+        <h2 data-i18n="stu_h">Hlas <span class="hl">študentov</span></h2>
+        <p data-i18n="stu_p">Na konci každej prednášky hodnotili študenti anonymne v Slido. Čísla nižšie sú priamo z exportov Slido; vybrané komentáre sú v pôvodnom znení, vrátane kritických.</p>
+      </div>
+    </div>
+    <div class="fb-grid">
+      <div class="big reveal">
+        <div class="eyebrow" style="color:rgba(255,255,255,.7)" data-i18n="big_eb">Priemer zo 4 prednášok</div>
+        <div class="n"><span class="dec" data-v="4.9">4,9</span><small>/5</small></div>
+        <div class="stars" aria-hidden="true" id="stars"></div>
+        <p data-i18n="big_p">55 hodnotení. Polovica prednášok dostala od všetkých hlasujúcich plných 5 bodov. Študentskú aplikáciu na cvičenie ohodnotili na Javeriana Cali 5,0 z 5 (14 hlasov).</p>
+      </div>
+      <div class="chart-card reveal">
+        <h3 data-i18n="ch1_h">Hodnotenie prednášok</h3>
+        <div class="note" data-i18n="ch1_note">Priemer na stupnici 1 - 5, n = počet hlasujúcich. Pri prejdení myšou rozdelenie hlasov.</div>
+        <div class="bars" id="ratings"></div>
+        <details class="tbl"><summary data-i18n="tbl">Zobraziť ako tabuľku</summary><table id="ratings-t"></table></details>
+      </div>
+    </div>
+    <div class="two">
+      <div class="chart-card reveal">
+        <h3 data-i18n="ch2_h">Ako sa menil názor počas prednášky</h3>
+        <div class="note" data-i18n="ch2_note">Rovnaká otázka položená pred vysvetlením a po ňom.</div>
+        <div class="legend"><span><i style="background:var(--series-1)"></i><b data-i18n="before">pred</b></span><span><i style="background:var(--series-2)"></i><b data-i18n="after">po</b></span></div>
+        <div class="shift" id="shift"></div>
+      </div>
+      <div class="chart-card reveal">
+        <h3 data-i18n="ch3_h">Čo študenti zvládli a kde boli medzery</h3>
+        <div class="note" data-i18n="ch3_note">Podiel správnych odpovedí vo vybraných kvízových otázkach.</div>
+        <div class="bars" id="quiz"></div>
+        <details class="tbl"><summary data-i18n="tbl">Zobraziť ako tabuľku</summary><table id="quiz-t"></table></details>
+      </div>
+    </div>
+    <div class="quotes reveal">
+      <div class="sec-head" style="margin:34px 0 14px"><h3 style="font-size:26px" data-i18n="q_h">Čo napísali</h3><div class="ctrls"><button class="btn" id="qprev" aria-label="Predchádzajúce">←</button><button class="btn" id="qnext" aria-label="Ďalšie">→</button></div></div>
+      <div class="qtrack" id="qtrack"></div>
+    </div>
+  </div>
+</section>
+
+<section id="galeria">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow" data-i18n="gal_eyebrow">Fotky a videá</div>
+        <h2 data-i18n="gal_h">Galéria</h2>
+      </div>
+      <div class="filters" id="filters"></div>
+    </div>
+    <div class="masonry" id="masonry"></div>
+  </div>
+</section>
+
+<section id="media">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow" data-i18n="med_eyebrow">Záznamy, rozhovory, materiály</div>
+        <h2 data-i18n="med_h">Videá a <span class="hl">odkazy</span></h2>
+      </div>
+    </div>
+    <div class="media-grid" id="yt"></div>
+    <div class="vids" id="vids"></div>
+    <div class="res" id="res"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h3>Ing. Anton Marci, PhD.</h3>
+      <div data-i18n="f_aff">Katedra účtovníctva a audítorstva, Fakulta hospodárskej informatiky, Ekonomická univerzita v Bratislave</div>
+      <div style="margin-top:8px"><a href="mailto:anton.marci@euba.sk">anton.marci@euba.sk</a></div>
+      <p data-i18n="f_fin" style="margin-top:16px">Pracovná cesta bola financovaná z mimouniverzitných zdrojov, bez nákladov pre EU v Bratislave.</p>
+    </div>
+    <div>
+      <p data-i18n="f_thanks">Ďakujem hostiteľom: Universidad Externado de Colombia, Universidad del Valle, Pontificia Universidad Javeriana Cali, sieti REDICEAC a UNIMINUTO Ibagué.</p>
+      <small data-i18n="f_credit">Fotografie a videá: autor a hostiteľské inštitúcie (Universidad del Valle, Universidad Externado de Colombia, REDICEAC, UNIMINUTO). Mapa: © OpenStreetMap.</small>
+    </div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Galéria">
+  <button class="x" aria-label="Zavrieť">✕</button>
+  <button class="pv" aria-label="Predchádzajúca">‹</button>
+  <figure id="lbfig"></figure>
+  <button class="nx" aria-label="Ďalšia">›</button>
+</div>
+<div class="tip" id="tip"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>window.LF=window.L;</script>
+<script>
+/* ============ CONFIG: odkazy, ktoré možno doplniť/zmeniť ============ */
+const LINKS = {
+  externadoApp: "https://externado-impuestos.vercel.app",
+  univalleApp: "https://univalle-impuestos.vercel.app",
+  javerianaApp: "https://javeriana-impuestos.vercel.app",
+  research: "https://impuestos-minimos-rediceac.vercel.app",
+  zenodo: "https://doi.org/10.5281/zenodo.23328853",
+  ytPos: "yM0IsZShlyo", ytPre: "BWPzfOE73gs", ytExt: "YcOqS6alhq8",
+  fbExternado: "https://www.facebook.com/reel/1428600389441981",
+  fbUniminuto: "https://www.facebook.com/reel/1759282741997829",
+  fbRediceac: "https://www.facebook.com/rediceac/posts/pfbid0nt88QCWBDDo5ZaWCb6PMfDQ24eJ3ydpdLfZfAFYr3QuG2x2HUiu1cWLeEpw32Vy8l"
+};
+
+/* ============ i18n ============ */
+let LANG = "sk";
+const T = {
+  nav_tl:{sk:"Časová os",es:"Cronología",en:"Timeline"},
+  nav_lec:{sk:"Prednášky",es:"Conferencias",en:"Lectures"},
+  nav_stu:{sk:"Hlas študentov",es:"Voz de los estudiantes",en:"Student voice"},
+  nav_gal:{sk:"Galéria",es:"Galería",en:"Gallery"},
+  nav_med:{sk:"Videá a odkazy",es:"Videos y enlaces",en:"Videos & links"},
+  hero_eyebrow:{sk:"Zahraničná pracovná cesta · 30. 10. - 18. 11. 2026",es:"Visita académica · 30.10. - 18.11.2026",en:"Academic visit · 30 Oct - 18 Nov 2026"},
+  hero_sub:{sk:"Hosťovské prednášky o dani z príjmov a minimálnych daniach na troch kolumbijských univerzitách a príspevok na kongrese REDICEAC 2026. Ing. Anton Marci, PhD., Katedra účtovníctva a audítorstva FHI, Ekonomická univerzita v Bratislave.",
+    es:"Conferencias sobre el impuesto de renta y los impuestos mínimos en tres universidades colombianas y ponencia en el congreso REDICEAC 2026. Ing. Anton Marci, PhD., Departamento de Contabilidad y Auditoría, Universidad de Economía y Negocios de Bratislava.",
+    en:"Guest lectures on corporate income tax and minimum taxes at three Colombian universities and a paper at the REDICEAC 2026 congress. Ing. Anton Marci, PhD., Department of Accounting and Auditing, Bratislava University of Economics and Business."},
+  st_days:{sk:"dní na ceste",es:"días de visita",en:"days on the road"},
+  st_unis:{sk:"inštitúcie: Externado, Univalle, Javeriana Cali, UNIMINUTO",es:"instituciones: Externado, Univalle, Javeriana Cali, UNIMINUTO",en:"institutions: Externado, Univalle, Javeriana Cali, UNIMINUTO"},
+  st_talks:{sk:"hosťovské prednášky a kongresový príspevok",es:"conferencias y una ponencia en congreso",en:"guest lectures and a congress paper"},
+  st_resp:{sk:"hodnotení študentov v Slido",es:"valoraciones de estudiantes en Slido",en:"student ratings in Slido"},
+  st_avg:{sk:"priemerné hodnotenie prednášok",es:"valoración media de las clases",en:"average lecture rating"},
+  tl_eyebrow:{sk:"Deň po dni",es:"Día a día",en:"Day by day"},
+  tl_h:{sk:"Interaktívna <span class=hl>časová os</span>",es:"Cronología <span class=hl>interactiva</span>",en:"Interactive <span class=hl>timeline</span>"},
+  tl_p:{sk:"Vyberte deň: uvidíte, kde som bol, o čom som rozprával, s kým som sa stretol a čo zostalo na fotkách. Časy sú miestne (Kolumbia, UTC-5), v zátvorke slovenský čas.",
+    es:"Elija un día para ver dónde estuve, de qué hablé, con quién me reuní y qué quedó en las fotos. Horas locales de Colombia (UTC-5); entre paréntesis, la hora de Eslovaquia.",
+    en:"Pick a day to see where I was, what I spoke about, whom I met and what the photos show. Times are local (Colombia, UTC-5), Slovak time in brackets."},
+  map_note:{sk:"Kliknutím na mesto na mape prejdete na príslušné dni. Prerušovaná čiara = let, plná = cesta autom.",es:"Haga clic en una ciudad para ir a sus días. Línea discontinua = vuelo, continua = carretera.",en:"Click a city to jump to its days. Dashed line = flight, solid = road."},
+  play:{sk:"Prehrať cestu",es:"Reproducir el viaje",en:"Play the trip"},
+  stop:{sk:"Zastaviť",es:"Detener",en:"Stop"},
+  photos:{sk:"Fotky z tohto dňa",es:"Fotos del día",en:"Photos from this day"},
+  lec_eyebrow:{sk:"Čo som prednášal",es:"Qué presenté",en:"What I presented"},
+  lec_h:{sk:"Prednášky a <span class=hl>kongres</span>",es:"Conferencias y <span class=hl>congreso</span>",en:"Lectures and <span class=hl>congress</span>"},
+  lec_p:{sk:"Spoločná niť: ako krajiny zdaňujú zisk firiem, prečo zavádzajú minimálne dane a čo to robí s vykazovaním strát. Prednášal som v angličtine s podkladmi v španielčine a angličtine, so Slido otázkami a študentskou aplikáciou na praktické cvičenie.",
+    es:"El hilo común: cómo gravan los países la utilidad de las empresas, por qué introducen impuestos mínimos y qué cambia en el reporte de pérdidas. Presenté en inglés con diapositivas en español e inglés, preguntas en Slido y una aplicación para la práctica.",
+    en:"The common thread: how countries tax company profit, why they introduce minimum taxes and what that does to loss reporting. I lectured in English with Spanish/English slides, Slido questions and a student app for practice."},
+  stu_eyebrow:{sk:"Spätná väzba v Slido",es:"Retroalimentación en Slido",en:"Feedback in Slido"},
+  stu_h:{sk:"Hlas <span class=hl>študentov</span>",es:"La voz de los <span class=hl>estudiantes</span>",en:"Student <span class=hl>voice</span>"},
+  stu_p:{sk:"Na konci každej prednášky hodnotili študenti anonymne v Slido. Čísla nižšie sú priamo z exportov Slido; vybrané komentáre sú v pôvodnom znení, vrátane kritických.",
+    es:"Al final de cada clase los estudiantes evaluaron de forma anónima en Slido. Las cifras provienen directamente de los informes de Slido; los comentarios seleccionados se citan textualmente, también los críticos.",
+    en:"At the end of each lecture students rated it anonymously in Slido. The figures come straight from the Slido exports; selected comments are quoted verbatim, critical ones included."},
+  big_eb:{sk:"Priemer zo 4 prednášok",es:"Media de 4 clases",en:"Average of 4 lectures"},
+  big_p:{sk:"55 hodnotení. Polovica prednášok dostala od všetkých hlasujúcich plných 5 bodov. Študentskú aplikáciu na cvičenie ohodnotili na Javeriana Cali 5,0 z 5 (14 hlasov).",
+    es:"55 valoraciones. La mitad de las clases recibió 5 de 5 de todos los votantes. La aplicación de práctica obtuvo 5,0 de 5 en la Javeriana Cali (14 votos).",
+    en:"55 ratings. Half of the lectures got a full 5 from every voter. The practice app scored 5.0 out of 5 at Javeriana Cali (14 votes)."},
+  ch1_h:{sk:"Hodnotenie prednášok",es:"Valoración de las clases",en:"Lecture ratings"},
+  ch1_note:{sk:"Priemer na stupnici 1 - 5, n = počet hlasujúcich. Pri prejdení myšou rozdelenie hlasov.",es:"Media en escala 1 - 5, n = votantes. Pase el cursor para ver la distribución.",en:"Mean on a 1 - 5 scale, n = voters. Hover for the vote split."},
+  ch2_h:{sk:"Ako sa menil názor počas prednášky",es:"Cómo cambió la opinión durante la clase",en:"How opinions shifted during the lecture"},
+  ch2_note:{sk:"Rovnaká otázka položená pred vysvetlením a po ňom.",es:"La misma pregunta antes y después de la explicación.",en:"The same question asked before and after the explanation."},
+  before:{sk:"pred",es:"antes",en:"before"}, after:{sk:"po",es:"después",en:"after"},
+  ch3_h:{sk:"Čo študenti zvládli a kde boli medzery",es:"Qué dominaron y dónde quedaron vacíos",en:"What students got and where the gaps were"},
+  ch3_note:{sk:"Podiel správnych odpovedí vo vybraných kvízových otázkach.",es:"Porcentaje de respuestas correctas en preguntas seleccionadas.",en:"Share of correct answers in selected quiz questions."},
+  tbl:{sk:"Zobraziť ako tabuľku",es:"Ver como tabla",en:"Show as table"},
+  q_h:{sk:"Čo napísali",es:"Lo que escribieron",en:"What they wrote"},
+  gal_eyebrow:{sk:"Fotky a videá",es:"Fotos y videos",en:"Photos and videos"},
+  gal_h:{sk:"Galéria",es:"Galería",en:"Gallery"},
+  all:{sk:"Všetko",es:"Todo",en:"All"},
+  med_eyebrow:{sk:"Záznamy, rozhovory, materiály",es:"Grabaciones, entrevistas, materiales",en:"Recordings, interviews, materials"},
+  med_h:{sk:"Videá a <span class=hl>odkazy</span>",es:"Videos y <span class=hl>enlaces</span>",en:"Videos and <span class=hl>links</span>"},
+  f_aff:{sk:"Katedra účtovníctva a audítorstva, Fakulta hospodárskej informatiky, Ekonomická univerzita v Bratislave",es:"Departamento de Contabilidad y Auditoría, Facultad de Informática Económica, Universidad de Economía y Negocios de Bratislava",en:"Department of Accounting and Auditing, Faculty of Economic Informatics, Bratislava University of Economics and Business"},
+  f_fin:{sk:"Pracovná cesta bola financovaná z mimouniverzitných zdrojov, bez nákladov pre EU v Bratislave.",es:"La visita se financió con recursos externos, sin costo para la universidad.",en:"The visit was funded from external sources at no cost to the university."},
+  f_thanks:{sk:"Ďakujem hostiteľom: Universidad Externado de Colombia, Universidad del Valle, Pontificia Universidad Javeriana Cali, sieti REDICEAC a UNIMINUTO Ibagué.",es:"Gracias a los anfitriones: Universidad Externado de Colombia, Universidad del Valle, Pontificia Universidad Javeriana Cali, la red REDICEAC y UNIMINUTO Ibagué.",en:"Thank you to my hosts: Universidad Externado de Colombia, Universidad del Valle, Pontificia Universidad Javeriana Cali, the REDICEAC network and UNIMINUTO Ibagué."},
+  f_credit:{sk:"Fotografie a videá: autor a hostiteľské inštitúcie (Universidad del Valle, Universidad Externado de Colombia, REDICEAC, UNIMINUTO). Mapa: © OpenStreetMap.",es:"Fotos y videos: el autor y las instituciones anfitrionas (Universidad del Valle, Universidad Externado de Colombia, REDICEAC, UNIMINUTO). Mapa: © OpenStreetMap.",en:"Photos and videos: the author and the host institutions (Universidad del Valle, Universidad Externado de Colombia, REDICEAC, UNIMINUTO). Map: © OpenStreetMap."},
+  rec:{sk:"Záznam prednášky",es:"Grabación",en:"Recording"},
+  app:{sk:"Študentská aplikácia",es:"Aplicación para estudiantes",en:"Student app"},
+  page:{sk:"Výskumná stránka",es:"Página de investigación",en:"Research page"},
+  data:{sk:"Dataset (Zenodo)",es:"Datos (Zenodo)",en:"Dataset (Zenodo)"},
+  interview:{sk:"Rozhovor",es:"Entrevista",en:"Interview"},
+  rating:{sk:"hodnotenie",es:"valoración",en:"rating"},
+  watch_fb:{sk:"Pozrieť na Facebooku",es:"Ver en Facebook",en:"Watch on Facebook"},
+  correct:{sk:"správne",es:"correctas",en:"correct"},
+  wd:{sk:["Ne","Po","Ut","St","Št","Pi","So"],es:["Do","Lu","Ma","Mi","Ju","Vi","Sá"],en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]},
+  mo:{sk:["okt","nov"],es:["oct","nov"],en:["Oct","Nov"]}
+};
+const tx = o => (o && typeof o === "object" && !Array.isArray(o)) ? (o[LANG] ?? o.sk) : o;
+const t = k => tx(T[k]);
+
+/* ============ data ============ */
+const TYPES = {
+  lecture:{c:"var(--c-lecture)",n:{sk:"prednáška",es:"conferencia",en:"lecture"}},
+  congress:{c:"var(--c-congress)",n:{sk:"kongres",es:"congreso",en:"congress"}},
+  online:{c:"var(--c-online)",n:{sk:"online výučba EUBA",es:"clase en línea EUBA",en:"EUBA online class"}},
+  travel:{c:"var(--c-travel)",n:{sk:"cesta",es:"viaje",en:"travel"}},
+  people:{c:"var(--c-people)",n:{sk:"kolegovia a kultúra",es:"colegas y cultura",en:"colleagues & culture"}},
+  free:{c:"var(--c-free)",n:{sk:"príprava, voľno",es:"preparación, libre",en:"preparation, free"}}
+};
+const CITIES = {
+  bog:{n:"Bogotá",ll:[4.711,-74.0721]}, clo:{n:"Cali",ll:[3.4516,-76.532]},
+  ibe:{n:"Ibagué",ll:[4.4389,-75.2322]}, mde:{n:"Medellín",ll:[6.2442,-75.5812],minor:true}
+};
+const SK = (h) => { // local hh:mm -> SK (+6)
+  const [a,b]=h.split(":").map(Number); const s=(a+6)%24; return String(s).padStart(2,"0")+":"+String(b).padStart(2,"0");
+};
+const E = (type,time,title,desc,links) => ({type,time,title,desc,links});
+const DAYS = [
+ {d:"2026-10-30",city:"bog",where:{sk:"Viedeň - Madrid - Bogotá",es:"Viena - Madrid - Bogotá",en:"Vienna - Madrid - Bogotá"},ev:[
+   E("travel","07:05",{sk:"Odlet z Viedne, prestup v Madride",es:"Salida de Viena, escala en Madrid",en:"Departure from Vienna, change in Madrid"},{sk:"Iberia IB0798 a IB0151. Čas odletu je viedenský.",es:"Iberia IB0798 e IB0151. Hora de Viena.",en:"Iberia IB0798 and IB0151. Vienna time."}),
+   E("travel","16:35",{sk:"Prílet do Bogoty",es:"Llegada a Bogotá",en:"Arrival in Bogotá"},{sk:"Mesto vo výške 2 600 m n. m., prvý večer oddych.",es:"Ciudad a 2 600 m de altitud: primera noche de descanso.",en:"A city at 2,600 m: first evening to rest."})]},
+ {d:"2026-10-31",span:"2026-11-03",city:"bog",where:{sk:"Bogotá",es:"Bogotá",en:"Bogotá"},ev:[
+   E("free",null,{sk:"Aklimatizácia a príprava prednášok",es:"Aclimatación y preparación de las clases",en:"Acclimatisation and lecture preparation"},{sk:"Dvojjazyčné podklady (ES/EN), otázky do Slido, študentské aplikácie. 2. 11. bol v Kolumbii štátny sviatok.",es:"Diapositivas bilingües (ES/EN), preguntas de Slido y aplicaciones para estudiantes. El 2.11 fue festivo en Colombia.",en:"Bilingual slides (ES/EN), Slido questions, student apps. 2 Nov was a public holiday in Colombia."})]},
+ {d:"2026-11-04",city:"bog",where:{sk:"Universidad Externado de Colombia, Bogotá",es:"Universidad Externado de Colombia, Bogotá",en:"Universidad Externado de Colombia, Bogotá"},photos:["bog-kampus-1","bog-kampus-2","bog-panorama","bog-anton","bog-prednaska","v:bog-kampus"],ev:[
+   E("people","07:30",{sk:"Raňajky na fakulte",es:"Desayuno en la facultad",en:"Breakfast at the faculty"},{sk:"Facultad de Contaduría Pública, pred prednáškou.",es:"Facultad de Contaduría Pública, antes de la clase.",en:"Facultad de Contaduría Pública, before the lecture."}),
+   E("lecture","09:00",{sk:"Prednáška: <q>Impuesto de renta de sociedades e impuestos mínimos en Europa Central y del Este: diseño y lecciones prácticas</q>",es:"Clase: <q>Impuesto de renta de sociedades e impuestos mínimos en Europa Central y del Este: diseño y lecciones prácticas</q>",en:"Lecture: <q>Corporate income tax and minimum taxes in Central and Eastern Europe: design and practical lessons</q>"},{sk:"Spoločná hybridná prednáška pre bakalárskych a magisterských študentov, s otázkami v Slido. Hodnotenie 5,0/5.",es:"Sesión híbrida conjunta para pregrado y posgrado, con preguntas en Slido. Valoración 5,0/5.",en:"Joint hybrid session for undergraduate and graduate students, with Slido questions. Rated 5.0/5."},[["app","externadoApp"]]),
+   E("people",null,{sk:"Rozhovor pre fakultu",es:"Entrevista para la facultad",en:"Interview for the faculty"},{sk:"S Nelsonom Dueñasom o budúcnosti účtovníckej profesie, umelej inteligencii a dátach (séria „Diálogos internacionales“).",es:"Con Nelson Dueñas sobre el futuro de la profesión contable, la IA y los datos (serie «Diálogos internacionales»).",en:"With Nelson Dueñas on the future of the accounting profession, AI and data (“Diálogos internacionales” series)."},[["interview","ytExtUrl"],["watch_fb","fbExternado"]]),
+   E("online","11:00",{sk:"Online výučba pre EU v Bratislave",es:"Clases en línea para la EUBA",en:"Online classes for EUBA"},{sk:"Dve hodiny cez MS Teams z miestnosti, ktorú mi poskytlo Externado.",es:"Dos clases por MS Teams desde una sala de Externado.",en:"Two classes via MS Teams from a room provided by Externado."})]},
+ {d:"2026-11-05",city:"bog",where:{sk:"Universidad Externado de Colombia, Bogotá",es:"Universidad Externado de Colombia, Bogotá",en:"Universidad Externado de Colombia, Bogotá"},photos:["bog-terasa","bog-vecer","v:bog-hudba"],ev:[
+   E("online","03:15",{sk:"Online seminár ÚDPO II",es:"Seminario en línea ÚDPO II",en:"ÚDPO II online seminar"},{sk:"Pre študentov FHI o 9:15 slovenského času, v Bogote ešte v noci.",es:"Para los estudiantes de la FHI a las 9:15 en Eslovaquia: madrugada en Bogotá.",en:"For FHI students at 9:15 Slovak time - the middle of the night in Bogotá."}),
+   E("online","12:35",{sk:"Večerná online výučba EUBA",es:"Clase en línea vespertina EUBA",en:"EUBA evening online class"},null),
+   E("congress","17:00",{sk:"XI Encuentro Internacional en Contabilidad y Gestión: výskumný workshop",es:"XI Encuentro Internacional en Contabilidad y Gestión: taller de investigación",en:"XI Encuentro Internacional en Contabilidad y Gestión: research workshop"},{sk:"„La contabilidad en tiempos de incertidumbre“, s pedagógmi a výskumníkmi fakulty; potom recepcia so živou hudbou.",es:"«La contabilidad en tiempos de incertidumbre», con docentes e investigadores; después, cóctel con música en vivo.",en:"“La contabilidad en tiempos de incertidumbre”, with faculty and researchers; then a reception with live music."})]},
+ {d:"2026-11-06",span:"2026-11-08",city:"clo",where:{sk:"Bogotá - Cali",es:"Bogotá - Cali",en:"Bogotá - Cali"},ev:[
+   E("travel","10:25",{sk:"Let Bogotá - Cali",es:"Vuelo Bogotá - Cali",en:"Flight Bogotá - Cali"},{sk:"LATAM LA4067.",es:"LATAM LA4067.",en:"LATAM LA4067."}),
+   E("free",null,{sk:"Víkend voľno",es:"Fin de semana libre",en:"Weekend off"},null)]},
+ {d:"2026-11-09",city:"clo",where:{sk:"Universidad del Valle, Sede San Fernando, Cali",es:"Universidad del Valle, Sede San Fernando, Cali",en:"Universidad del Valle, San Fernando campus, Cali"},photos:["clo-plagat-pos","clo-pos-1","clo-pos-2","clo-pos-3"],ev:[
+   E("lecture","19:00",{sk:"Postgraduálna prednáška: <q>Impuesto mínimo global y diseño del impuesto sobre la renta de sociedades: Colombia, Eslovaquia y la Unión Europea en perspectiva comparada</q>",es:"Conferencia de posgrado: <q>Impuesto mínimo global y diseño del impuesto sobre la renta de sociedades: Colombia, Eslovaquia y la Unión Europea en perspectiva comparada</q>",en:"Postgraduate lecture: <q>Global minimum tax and the design of corporate income taxation: Colombia, Slovakia and the EU compared</q>"},{sk:"V angličtine so simultánnym tlmočením, naživo na YouTube. Na otázky zo Slido som potom odpovedal písomne. Hodnotenie 4,9/5.",es:"En inglés con interpretación simultánea, transmitida en YouTube. Después respondí por escrito a las preguntas de Slido. Valoración 4,9/5.",en:"In English with simultaneous interpretation, streamed live on YouTube. I later answered the Slido questions in writing. Rated 4.9/5."},[["rec","ytPosUrl"],["app","univalleApp"]]),
+   E("people","21:00",{sk:"Večera s kolegami",es:"Cena con los colegas",en:"Dinner with colleagues"},{sk:"Po prednáške ma kolegovia z Programa Académico de Contaduría Pública pozvali na večeru.",es:"Tras la conferencia, los colegas del Programa Académico de Contaduría Pública me invitaron a cenar.",en:"After the lecture, colleagues from the Public Accounting programme invited me to dinner."})]},
+ {d:"2026-11-10",city:"clo",where:{sk:"Pontificia Universidad Javeriana Cali",es:"Pontificia Universidad Javeriana Cali",en:"Pontificia Universidad Javeriana Cali"},photos:["jav-skupina-1","jav-skupina-2","jav-trieda-1","jav-trieda-2","jav-auditorium"],ev:[
+   E("lecture","09:00",{sk:"Prednáška: <q>Corporate income tax and minimum taxes</q>",es:"Clase: <q>Corporate income tax and minimum taxes</q>",en:"Lecture: <q>Corporate income tax and minimum taxes</q>"},{sk:"V predmete zdaňovanie prof. Liliany Heredia Rodríguez (Finanzas). Porovnanie DPPO na modelovej firme naprieč krajinami a cvičenie v aplikácii. Hodnotenie 4,9/5, aplikácia 5,0/5.",es:"En la asignatura de tributación de la Prof. Liliana Heredia Rodríguez (Finanzas). Comparación de una empresa modelo entre países y práctica en la aplicación. Valoración 4,9/5; aplicación 5,0/5.",en:"In Prof. Liliana Heredia Rodríguez's taxation course (Finance). A model company compared across countries plus practice in the app. Rated 4.9/5; app 5.0/5."},[["app","javerianaApp"]]),
+   E("people","12:00",{sk:"Spoločný obed s kolegami",es:"Almuerzo con los colegas",en:"Lunch with colleagues"},{sk:"Po prednáške pozvanie na obed s kolegami z Javeriana Cali.",es:"Invitación a almorzar con colegas de la Javeriana Cali.",en:"Invited to lunch with Javeriana Cali colleagues."})]},
+ {d:"2026-11-11",city:"ibe",where:{sk:"Cali → Ibagué",es:"Cali → Ibagué",en:"Cali → Ibagué"},photos:["clo-plagat-pre","clo-pre-1","clo-kolegovia-1","clo-kolegovia-2","clo-studenti","clo-portret","v:clo-univalle"],ev:[
+   E("lecture","08:30",{sk:"Bakalárska prednáška: <q>Los impuestos en una economía globalizada: en qué se diferencian los sistemas tributarios y por qué le importa al contador público</q>",es:"Conferencia de pregrado: <q>Los impuestos en una economía globalizada: en qué se diferencian los sistemas tributarios y por qué le importa al contador público</q>",en:"Undergraduate lecture: <q>Taxation in a globalised economy: how tax systems differ and why it matters for the public accountant</q>"},{sk:"Universidad del Valle, so simultánnym tlmočením, naživo na YouTube. Hodnotenie 5,0/5. Na pozvaný brunch už nezostal čas.",es:"Universidad del Valle, con interpretación simultánea, en directo en YouTube. Valoración 5,0/5. No alcancé a ir al brunch al que me invitaron.",en:"Universidad del Valle, with simultaneous interpretation, live on YouTube. Rated 5.0/5. No time left for the brunch I was invited to."},[["rec","ytPreUrl"]]),
+   E("travel","09:45",{sk:"Autom cez Andy do Ibagué",es:"Por carretera a Ibagué, cruzando los Andes",en:"By road across the Andes to Ibagué"},{sk:"Približne 250 km cez tunel La Línea.",es:"Unos 250 km por el túnel de La Línea.",en:"About 250 km via the La Línea tunnel."}),
+   E("online","11:00",{sk:"Online výučba EUBA z auta",es:"Clases en línea para la EUBA desde el carro",en:"EUBA online classes from the car"},{sk:"Dve hodiny cez mobilné dáta, v horách so slabším signálom.",es:"Dos clases con datos móviles; en la montaña, con señal débil.",en:"Two classes over mobile data, with weak signal in the mountains."}),
+   E("people","20:00",{sk:"Stretnutie s prof. Omarom de Jesús Montillom Galvisom",es:"Reunión con el Prof. Omar de Jesús Montilla Galvis",en:"Meeting Prof. Omar de Jesús Montilla Galvis"},{sk:"Predseda siete REDICEAC, Universidad del Valle.",es:"Presidente de REDICEAC, Universidad del Valle.",en:"President of the REDICEAC network, Universidad del Valle."})]},
+ {d:"2026-11-12",city:"ibe",where:{sk:"UNIMINUTO Ibagué, Sede Chicalá",es:"UNIMINUTO Ibagué, Sede Chicalá",en:"UNIMINUTO Ibagué, Chicalá campus"},photos:["ibe-kampus","ibe-organizatori","v:ibe-podium","v:ibe-vecer"],ev:[
+   E("online","03:15",{sk:"Online seminár ÚDPO II",es:"Seminario en línea ÚDPO II",en:"ÚDPO II online seminar"},null),
+   E("congress","08:15",{sk:"Otvorenie kongresu REDICEAC 2026",es:"Instalación del congreso REDICEAC 2026",en:"Opening of the REDICEAC 2026 congress"},{sk:"XI Congreso Internacional y XXII Nacional de Investigación en Contaduría Pública: „Los retos de la eco-contabilidad“.",es:"XI Congreso Internacional y XXII Nacional de Investigación en Contaduría Pública: «Los retos de la eco-contabilidad».",en:"11th International and 22nd National Congress of Research in Public Accounting: “The challenges of eco-accounting”."}),
+   E("congress","12:10",{sk:"Môj príspevok: <q>Impuestos mínimos y reportes de pérdidas: evidencia de Europa Central y del Este, Colombia y Ecuador</q>",es:"Mi ponencia: <q>Impuestos mínimos y reportes de pérdidas: evidencia de Europa Central y del Este, Colombia y Ecuador</q>",en:"My paper: <q>Minimum taxes and loss reporting: evidence from Central and Eastern Europe, Colombia and Ecuador</q>"},{sk:"Ako minimálne dane menia vykazovanie strát: panelové dáta z účtovných závierok Slovenska, Estónska, Lotyšska, Kolumbie a Ekvádoru. Uzatváral dopoludňajší blok.",es:"Cómo cambian los impuestos mínimos el reporte de pérdidas: datos de panel de estados financieros de Eslovaquia, Estonia, Letonia, Colombia y Ecuador. Cerró la jornada de la mañana.",en:"How minimum taxes change loss reporting: panel data from financial statements in Slovakia, Estonia, Latvia, Colombia and Ecuador. It closed the morning session."},[["page","research"],["data","zenodo"]]),
+   E("online","12:50",{sk:"Online výučba EUBA",es:"Clase en línea EUBA",en:"EUBA online class"},{sk:"Posunutá o 15 minút kvôli vystúpeniu na kongrese.",es:"Aplazada 15 minutos por la ponencia.",en:"Moved 15 minutes later because of the congress talk."}),
+   E("people","19:00",{sk:"Ocenenie Contador Benemérito de Colombia a kultúrny program",es:"Distinción Contador Benemérito de Colombia y acto cultural",en:"Contador Benemérito de Colombia award and cultural programme"},null)]},
+ {d:"2026-11-13",city:"ibe",where:{sk:"UNIMINUTO Ibagué a mesto Ibagué",es:"UNIMINUTO Ibagué y la ciudad",en:"UNIMINUTO Ibagué and the city"},photos:["ibe-poster-1","ibe-poster-2","ibe-poster-3","ibe-vstup","ibe-sala","ibe-kolegovia","ibe-student","ibe-selfie"],ev:[
+   E("congress","08:00",{sk:"2. deň kongresu: semilleros a postery",es:"Segundo día: semilleros y pósteres",en:"Day 2: student research groups and posters"},{sk:"Študentské výskumné skupiny (semilleros), prehliadka posterov, ďalšie príspevky a záver kongresu.",es:"Encuentro de semilleros, visita guiada a los pósteres, ponencias y clausura.",en:"Student research groups (semilleros), a guided poster tour, further papers and the closing."},[["watch_fb","fbUniminuto"]]),
+   E("people",null,{sk:"Prehliadka Ibagué s prof. Montillom",es:"Recorrido por Ibagué con el Prof. Montilla",en:"Tour of Ibagué with Prof. Montilla"},{sk:"Po skončení kongresu ma prof. Montilla s kolegami zobral na prehliadku mesta.",es:"Tras la clausura, el Prof. Montilla me llevó con los colegas a conocer la ciudad.",en:"After the closing, Prof. Montilla took me and colleagues on a tour of the city."}),
+   E("people",null,{sk:"Večer: kultúra v meste",es:"Noche: cultura en la ciudad",en:"Evening: culture in town"},{sk:"Kolega prekladateľ ma pozval na kultúrny program v Ibagué, „hudobnom hlavnom meste Kolumbie“.",es:"Un colega traductor me invitó a un evento cultural en Ibagué, la «capital musical de Colombia».",en:"A colleague, a translator, took me to a cultural evening in Ibagué, “Colombia's musical capital”."})]},
+ {d:"2026-11-14",span:"2026-11-16",city:"mde",where:{sk:"Ibagué - Bogotá - Medellín",es:"Ibagué - Bogotá - Medellín",en:"Ibagué - Bogotá - Medellín"},ev:[
+   E("travel","11:00",{sk:"Lety Ibagué - Bogotá - Medellín",es:"Vuelos Ibagué - Bogotá - Medellín",en:"Flights Ibagué - Bogotá - Medellín"},{sk:"LATAM LA4304 a LA4012.",es:"LATAM LA4304 y LA4012.",en:"LATAM LA4304 and LA4012."}),
+   E("free",null,{sk:"Víkend a štátny sviatok",es:"Fin de semana y festivo",en:"Weekend and public holiday"},null)]},
+ {d:"2026-11-17",span:"2026-11-18",city:"bog",where:{sk:"Medellín - Bogotá - Madrid - Viedeň",es:"Medellín - Bogotá - Madrid - Viena",en:"Medellín - Bogotá - Madrid - Vienna"},ev:[
+   E("travel","14:00",{sk:"Nočný let Bogotá - Madrid",es:"Vuelo nocturno Bogotá - Madrid",en:"Overnight flight Bogotá - Madrid"},{sk:"Iberia IB0156, ráno IB0791 do Viedne, prílet 18. 11. o 11:40.",es:"Iberia IB0156 y por la mañana IB0791 a Viena; llegada el 18.11 a las 11:40.",en:"Iberia IB0156, then IB0791 to Vienna, landing 18 Nov at 11:40."})]}
+];
+
+const PH = {
+ "bog-kampus-1":{c:"bog",d:"4. 11.",t:{sk:"Ráno na kampuse Externado nad Bogotou",es:"Mañana en el campus del Externado, sobre Bogotá",en:"Morning on the Externado campus above Bogotá"}},
+ "bog-kampus-2":{c:"bog",d:"4. 11.",t:{sk:"Kampus Externado a mrakodrapy Bogoty",es:"El campus del Externado y los rascacielos de Bogotá",en:"Externado campus and the Bogotá skyline"}},
+ "bog-panorama":{c:"bog",d:"4. 11.",t:{sk:"Výhľad z Externado na Bogotu",es:"Vista de Bogotá desde el Externado",en:"View of Bogotá from Externado"}},
+ "bog-anton":{c:"bog",d:"4. 11.",t:{sk:"Na terase univerzity po prednáške",es:"En la terraza de la universidad tras la clase",en:"On the university terrace after the lecture"}},
+ "bog-prednaska":{c:"bog",d:"4. 11.",t:{sk:"Prednáška na Externado (foto: Universidad Externado de Colombia)",es:"Clase en el Externado (foto: Universidad Externado de Colombia)",en:"Lecturing at Externado (photo: Universidad Externado de Colombia)"}},
+ "bog-terasa":{c:"bog",d:"5. 11.",t:{sk:"Večer pred výskumným workshopom",es:"Atardecer antes del taller de investigación",en:"Evening before the research workshop"}},
+ "bog-vecer":{c:"bog",d:"5. 11.",t:{sk:"Bogotá za súmraku",es:"Bogotá al anochecer",en:"Bogotá at dusk"}},
+ "clo-plagat-pos":{c:"clo",d:"9. 11.",t:{sk:"Pozvánka Univalle na postgraduálnu prednášku",es:"Afiche de Univalle de la conferencia de posgrado",en:"Univalle poster for the postgraduate lecture"}},
+ "clo-pos-1":{c:"clo",d:"9. 11.",t:{sk:"Postgraduálna prednáška na Univalle",es:"Conferencia de posgrado en Univalle",en:"Postgraduate lecture at Univalle"}},
+ "clo-pos-2":{c:"clo",d:"9. 11.",t:{sk:"Univalle: diskusia o minimálnej dani",es:"Univalle: discusión sobre el impuesto mínimo",en:"Univalle: discussing the minimum tax"}},
+ "clo-pos-3":{c:"clo",d:"9. 11.",t:{sk:"Univalle, Sede San Fernando",es:"Univalle, Sede San Fernando",en:"Univalle, San Fernando campus"}},
+ "clo-plagat-pre":{c:"clo",d:"11. 11.",t:{sk:"Pozvánka Univalle na bakalársku prednášku",es:"Afiche de Univalle de la conferencia de pregrado",en:"Univalle poster for the undergraduate lecture"}},
+ "clo-pre-1":{c:"clo",d:"11. 11.",t:{sk:"Bakalárska prednáška na Univalle",es:"Conferencia de pregrado en Univalle",en:"Undergraduate lecture at Univalle"}},
+ "clo-kolegovia-1":{c:"clo",d:"11. 11.",t:{sk:"S kolegom z Programa de Contaduría Pública",es:"Con un colega del Programa de Contaduría Pública",en:"With a colleague from the Public Accounting programme"}},
+ "clo-kolegovia-2":{c:"clo",d:"11. 11.",t:{sk:"S kolegami z Univalle",es:"Con colegas de Univalle",en:"With Univalle colleagues"}},
+ "clo-studenti":{c:"clo",d:"11. 11.",t:{sk:"Spoločná fotka so študentmi a pedagógmi Univalle",es:"Foto con estudiantes y docentes de Univalle",en:"With Univalle students and faculty"}},
+ "clo-portret":{c:"clo",d:"11. 11.",t:{sk:"Pred Facultad de Ciencias de la Administración",es:"Frente a la Facultad de Ciencias de la Administración",en:"Outside the Faculty of Administration Sciences"}},
+ "jav-skupina-1":{c:"jav",d:"10. 11.",t:{sk:"So študentmi Javeriana Cali",es:"Con estudiantes de la Javeriana Cali",en:"With Javeriana Cali students"}},
+ "jav-skupina-2":{c:"jav",d:"10. 11.",t:{sk:"Trieda prof. Heredia Rodríguez",es:"El curso de la Prof. Heredia Rodríguez",en:"Prof. Heredia Rodríguez's class"}},
+ "jav-trieda-1":{c:"jav",d:"10. 11.",t:{sk:"Cvičenie v študentskej aplikácii",es:"Práctica en la aplicación",en:"Practice in the student app"}},
+ "jav-trieda-2":{c:"jav",d:"10. 11.",t:{sk:"Prednáška na Javeriana Cali",es:"Clase en la Javeriana Cali",en:"Lecture at Javeriana Cali"}},
+ "jav-auditorium":{c:"jav",d:"10. 11.",t:{sk:"Auditórium Javeriana Cali",es:"Auditorio de la Javeriana Cali",en:"Javeriana Cali auditorium"}},
+ "ibe-kampus":{c:"ibe",d:"12. 11.",t:{sk:"Kampus UNIMINUTO v Ibagué",es:"Campus de UNIMINUTO en Ibagué",en:"UNIMINUTO campus in Ibagué"}},
+ "ibe-organizatori":{c:"ibe",d:"12. 11.",t:{sk:"S organizátormi kongresu REDICEAC (foto: REDICEAC)",es:"Con los organizadores de REDICEAC (foto: REDICEAC)",en:"With the REDICEAC organisers (photo: REDICEAC)"}},
+ "ibe-poster-1":{c:"ibe",d:"13. 11.",t:{sk:"Posterová sekcia študentských výskumných skupín",es:"Pósteres de los semilleros de investigación",en:"Student research group posters"}},
+ "ibe-poster-2":{c:"ibe",d:"13. 11.",t:{sk:"Poster: umelá inteligencia a digitálny marketing",es:"Póster: inteligencia artificial y marketing digital",en:"Poster: AI and digital marketing"}},
+ "ibe-poster-3":{c:"ibe",d:"13. 11.",t:{sk:"Poster: pranie špinavých peňazí",es:"Póster: lavado de dinero",en:"Poster: money laundering"}},
+ "ibe-vstup":{c:"ibe",d:"13. 11.",t:{sk:"Vstup do UNIMINUTO",es:"Entrada a UNIMINUTO",en:"UNIMINUTO entrance"}},
+ "ibe-sala":{c:"ibe",d:"13. 11.",t:{sk:"Kongresová sála",es:"Sala del congreso",en:"Congress hall"}},
+ "ibe-kolegovia":{c:"ibe",d:"13. 11.",t:{sk:"S kolegami na kongrese",es:"Con colegas en el congreso",en:"With colleagues at the congress"}},
+ "ibe-student":{c:"ibe",d:"13. 11.",t:{sk:"So študentom na kongrese",es:"Con un estudiante en el congreso",en:"With a student at the congress"}},
+ "ibe-selfie":{c:"ibe",d:"13. 11.",t:{sk:"Posledný deň kongresu",es:"Último día del congreso",en:"Last day of the congress"}}
+};
+const VID = {
+ "bog-kampus":{c:"bog",d:"4. 11.",t:{sk:"Ráno na kampuse Externado",es:"Mañana en el Externado",en:"Morning at Externado"}},
+ "bog-hudba":{c:"bog",d:"5. 11.",t:{sk:"Živá hudba na recepcii XI Encuentro",es:"Música en vivo en el cóctel del XI Encuentro",en:"Live music at the XI Encuentro reception"}},
+ "clo-univalle":{c:"clo",d:"11. 11.",t:{sk:"Video Univalle k medzinárodnej konferencii (Universidad del Valle)",es:"Video de Univalle sobre la conferencia internacional (Universidad del Valle)",en:"Univalle video on the international lecture (Universidad del Valle)"}},
+ "ibe-podium":{c:"ibe",d:"12. 11.",t:{sk:"Kongres REDICEAC, dopoludňajší blok",es:"REDICEAC, jornada de la mañana",en:"REDICEAC, morning session"}},
+ "ibe-vecer":{c:"ibe",d:"12. 11.",t:{sk:"Večerný program kongresu",es:"Jornada nocturna del congreso",en:"Congress evening programme"}}
+};
+const GROUPS = {bog:{sk:"Bogotá · Externado",es:"Bogotá · Externado",en:"Bogotá · Externado"},clo:{sk:"Cali · Univalle",es:"Cali · Univalle",en:"Cali · Univalle"},jav:{sk:"Cali · Javeriana",es:"Cali · Javeriana",en:"Cali · Javeriana"},ibe:{sk:"Ibagué · REDICEAC",es:"Ibagué · REDICEAC",en:"Ibagué · REDICEAC"}};
+
+const LECTURES = [
+ {img:"bog-prednaska",date:"4. 11. 2026",inst:"Universidad Externado de Colombia",city:"Bogotá",type:"lecture",
+  title:"Impuesto de renta de sociedades e impuestos mínimos en Europa Central y del Este: diseño y lecciones prácticas",
+  aud:{sk:"Bakalári a magistri spolu, hybridne, ES/EN",es:"Pregrado y posgrado juntos, híbrida, ES/EN",en:"Undergraduate and graduate together, hybrid, ES/EN"},
+  desc:{sk:"Ako vyzerajú minimálne dane v strednej a východnej Európe a čo robia s rozhodovaním manažéra o vykázanom zisku. Fakulta vydala certifikát o prednáške a v ten deň so mnou nahrala aj rozhovor.",es:"Cómo son los impuestos mínimos en Europa Central y del Este y qué cambian en la decisión del gerente sobre la utilidad reportada. La facultad expidió un certificado y ese mismo día grabó una entrevista.",en:"What minimum taxes look like in Central and Eastern Europe and how they change a manager's choice of reported profit. The faculty issued a certificate and recorded an interview with me the same day."},
+  score:"5,0",n:13,links:[["app","externadoApp"],["interview","ytExtUrl"]]},
+ {img:"clo-pos-1",date:"9. 11. 2026",inst:"Universidad del Valle",city:"Cali",type:"lecture",
+  title:"Impuesto mínimo global y diseño del impuesto sobre la renta de sociedades: Colombia, Eslovaquia y la Unión Europea en perspectiva comparada",
+  aud:{sk:"Postgraduál vrátane Especialización en Gestión Tributaria, EN + tlmočenie",es:"Posgrados, incl. Especialización en Gestión Tributaria, EN + interpretación",en:"Postgraduate incl. Specialisation in Tax Management, EN + interpretation"},
+  desc:{sk:"Pilier 2 (globálna minimálna daň) verzus kolumbijská TTD a slovenská minimálna daň v pevnej sume. Písomné odpovede na otázky účastníkov som poslal po prednáške.",es:"El Pilar Dos frente a la TTD colombiana y el impuesto mínimo eslovaco de valor fijo. Las respuestas escritas a las preguntas se enviaron después.",en:"Pillar Two versus Colombia's TTD and Slovakia's fixed-amount minimum tax. Written answers to participants' questions followed."},
+  score:"4,9",n:18,links:[["rec","ytPosUrl"],["app","univalleApp"]]},
+ {img:"jav-trieda-2",date:"10. 11. 2026",inst:"Pontificia Universidad Javeriana Cali",city:"Cali",type:"lecture",
+  title:"Corporate income tax and minimum taxes",
+  aud:{sk:"Predmet zdaňovanie, prof. Liliana Heredia Rodríguez, EN",es:"Curso de tributación, Prof. Liliana Heredia Rodríguez, EN",en:"Taxation course, Prof. Liliana Heredia Rodríguez, EN"},
+  desc:{sk:"Jedna modelová firma vo viacerých krajinách: sadzby, zdanenie rozdeleného zisku (Estónsko, Lotyšsko), minimálne dane a strata. Simulácia v aplikácii.",es:"Una empresa modelo en varios países: tarifas, impuesto sobre utilidades distribuidas (Estonia, Letonia), impuestos mínimos y pérdidas. Simulación en la aplicación.",en:"One model company across several countries: rates, distribution taxes (Estonia, Latvia), minimum taxes and losses. A simulation in the app."},
+  score:"4,9",n:14,links:[["app","javerianaApp"]]},
+ {img:"clo-pre-1",date:"11. 11. 2026",inst:"Universidad del Valle",city:"Cali",type:"lecture",
+  title:"Los impuestos en una economía globalizada: en qué se diferencian los sistemas tributarios y por qué le importa al contador público",
+  aud:{sk:"Bakalári Contaduría Pública, EN + tlmočenie",es:"Pregrado en Contaduría Pública, EN + interpretación",en:"Undergraduate Public Accounting, EN + interpretation"},
+  desc:{sk:"Prečo by mal kolumbijský účtovník poznať cudzie daňové systémy: zisk, rozdelenie, straty a Pilier 2 v praxi.",es:"Por qué el contador colombiano debe conocer otros sistemas tributarios: utilidad, distribuciones, pérdidas y el Pilar Dos.",en:"Why a Colombian accountant should know other tax systems: profit, distributions, losses and Pillar Two."},
+  score:"5,0",n:10,links:[["rec","ytPreUrl"]]},
+ {img:"ibe-organizatori",date:"12. 11. 2026",inst:"REDICEAC 2026 · UNIMINUTO",city:"Ibagué",type:"congress",
+  title:"Impuestos mínimos y reportes de pérdidas: evidencia de Europa Central y del Este, Colombia y Ecuador",
+  aud:{sk:"Kongresový príspevok (ponencia 16), EN so slajdmi v ES",es:"Ponencia 16, en inglés con diapositivas en español",en:"Congress paper no. 16, EN with Spanish slides"},
+  desc:{sk:"Porovnanie piatich krajín na panelových dátach z účtovných závierok: či a ako minimálne dane menia počet firiem, ktoré vykazujú stratu. Dáta sú voľne dostupné na Zenodo.",es:"Comparación de cinco países con datos de panel de estados financieros: si los impuestos mínimos cambian cuántas empresas reportan pérdidas, y cómo. Datos abiertos en Zenodo.",en:"Five countries compared on financial-statement panel data: whether and how minimum taxes change how many firms report a loss. Open data on Zenodo."},
+  links:[["page","research"],["data","zenodo"],["watch_fb","fbUniminuto"]]}
+];
+
+const RATINGS = [
+ {k:{sk:"Externado",es:"Externado",en:"Externado"},s:{sk:"4. 11., bakalári + magistri",es:"4.11, pregrado + posgrado",en:"4 Nov, undergrad + grad"},m:5.0,n:13,dist:[13,0,0,0,0]},
+ {k:{sk:"Univalle",es:"Univalle",en:"Univalle"},s:{sk:"9. 11., postgraduál",es:"9.11, posgrado",en:"9 Nov, postgraduate"},m:4.89,n:18,dist:[16,2,0,0,0]},
+ {k:{sk:"Javeriana Cali",es:"Javeriana Cali",en:"Javeriana Cali"},s:{sk:"10. 11., Finanzas",es:"10.11, Finanzas",en:"10 Nov, Finance"},m:4.93,n:14,dist:[13,1,0,0,0]},
+ {k:{sk:"Univalle",es:"Univalle",en:"Univalle"},s:{sk:"11. 11., bakalári",es:"11.11, pregrado",en:"11 Nov, undergraduate"},m:5.0,n:10,dist:[10,0,0,0,0]}
+];
+const SHIFT = [
+ {q:{sk:"Čo sa manažérovi oplatí vykázať: stratu, alebo malý zisk?",es:"¿Qué le conviene reportar al gerente: pérdida o una pequeña utilidad?",en:"What should the manager report: a loss or a small profit?"},
+  s:{sk:"Externado, 4. 11. · podiel odpovedí „zisk 5 000 EUR“ · pred: bez minimálnej dane, po: s minimálnou daňou aj pri strate · n = 15 / 15",es:"Externado, 4.11 · respuestas «utilidad de 5 000 EUR» · antes: sin impuesto mínimo; después: con impuesto mínimo aun con pérdida · n = 15 / 15",en:"Externado, 4 Nov · share answering “profit of EUR 5,000” · before: no minimum tax; after: minimum tax due even on a loss · n = 15 / 15"},b:67,a:87},
+ {q:{sk:"Má minimálna daň dopadať na všetky firmy, alebo len na veľké skupiny?",es:"¿Debe un impuesto mínimo alcanzar a todas las sociedades o solo a los grandes grupos?",en:"Should a minimum tax reach every company or only large groups?"},
+  s:{sk:"Univalle, 9. 11. · podiel odpovedí „len veľké skupiny (≥ 750 mil. EUR)“ · n = 16 / 13",es:"Univalle, 9.11 · respuestas «solo grandes grupos (≥ 750 M EUR)» · n = 16 / 13",en:"Univalle, 9 Nov · share answering “only large groups (≥ EUR 750 m)” · n = 16 / 13"},b:38,a:85}
+];
+const QUIZ = [
+ {k:{sk:"Sadzba DPPO na Slovensku pre firmu s obratom 800 000 EUR",es:"Tarifa del impuesto de renta en Eslovaquia para una empresa con ingresos de 800 000 EUR",en:"Slovak CIT rate for a company with EUR 800,000 revenue"},s:"Javeriana · n = 16",v:94},
+ {k:{sk:"Pridá kolumbijská TTD (15 %) daň pri efektívnej sadzbe 35 %?",es:"¿Adiciona la TTD (15 %) impuesto con una tasa efectiva del 35 %?",en:"Does Colombia's 15% TTD add tax at a 35% effective rate?"},s:"Javeriana · n = 14",v:93},
+ {k:{sk:"Ktorá krajina ešte neprijala Pilier 2?",es:"¿Qué país aún no ha adoptado el Pilar Dos?",en:"Which country has not adopted Pillar Two yet?"},s:"Univalle 11. 11. · n = 19",v:89},
+ {k:{sk:"Aký je dizajn kolumbijskej minimálnej sadzby (TTD)?",es:"¿Qué diseño de piso usa la tasa mínima colombiana?",en:"Which floor design does Colombia's minimum rate use?"},s:"Externado · n = 14",v:86},
+ {k:{sk:"Od akých konsolidovaných výnosov platí Pilier 2?",es:"¿Desde qué ingresos consolidados aplica el Pilar Dos?",en:"From what consolidated revenue does Pillar Two apply?"},s:"Univalle 9. 11. · n = 14",v:79},
+ {k:{sk:"Minimálna daň na Slovensku pri strate 10 000 EUR (obrat 800 000 EUR)",es:"Impuesto mínimo en Eslovaquia con pérdida de 10 000 EUR (ingresos 800 000 EUR)",en:"Slovak minimum tax on a EUR 10,000 loss (revenue EUR 800,000)"},s:"Javeriana · n = 15",v:67},
+ {k:{sk:"Estónsko: daň firmy z netto dividendy 78 000 EUR (22/78)",es:"Estonia: impuesto de la sociedad sobre un dividendo neto de 78 000 EUR (22/78)",en:"Estonia: company tax on a net dividend of EUR 78,000 (22/78)"},s:"Javeriana · n = 15",v:20}
+];
+const QUOTES = [
+ {o:"Excelente profesor, un espacio muy didáctico y pedagógico. Muchas gracias por su valiosa visita!",src:"Univalle · 9. 11.",tr:{sk:"Výborný profesor, veľmi didaktický a pedagogický priestor. Ďakujeme za vzácnu návštevu!",en:"Excellent professor, a very didactic and pedagogical session. Thank you for your valuable visit!"}},
+ {o:"La clase fue perfecta. El profesor tiene un manejo de los temas excepcional y su pedagogía fue fundamental para que todos los asistentes entendieran las temáticas y los casos estudiados.",src:"Univalle · 11. 11.",tr:{sk:"Hodina bola perfektná. Profesor výnimočne ovláda tému a jeho pedagogika pomohla všetkým pochopiť témy aj prípady.",en:"The class was perfect. The professor's command of the topics is exceptional and his teaching helped everyone understand the topics and cases."}},
+ {o:"The discussion on the topic of the minimum tax rate was very insightful and enriching. It not only broadened our understanding of tax matters but also allowed us to learn about tax systems in other countries, such as Slovakia.",src:"Externado · 4. 11.",tr:{sk:"Diskusia o minimálnej sadzbe dane bola podnetná a obohacujúca. Rozšírila naše chápanie daní a ukázala nám daňové systémy iných krajín, napríklad Slovenska.",es:"La discusión sobre la tasa mínima fue muy reveladora y enriquecedora; amplió nuestra comprensión tributaria y nos mostró sistemas de otros países, como Eslovaquia."}},
+ {o:"Su inglés es muy entendible y apropió adecuadamente el tema… el apoyo entre diapositivas y los juegos dinámicos fueron muy buenos.",src:"Externado · 4. 11.",tr:{sk:"Jeho angličtina je veľmi zrozumiteľná a tému dobre zvládol… prepojenie slajdov a interaktívnych hier bolo výborné.",en:"His English is very understandable and he handled the topic well… the slides together with the interactive games were very good."}},
+ {o:"Even if the class wasn't in my native language I understood every part with precision.",src:"Javeriana · 10. 11.",tr:{sk:"Hoci hodina nebola v mojom rodnom jazyku, rozumel som každej časti presne.",es:"Aunque la clase no fue en mi lengua materna, entendí cada parte con precisión."}},
+ {o:"The simulation was great",src:"Javeriana · 10. 11.",tr:{sk:"Simulácia bola skvelá.",es:"La simulación fue genial."}},
+ {o:"Sin duda, el referente para Colombia, especialmente para el momento, es relevante. Sin embargo, dada la fragilidad del tejido empresarial, sigue siendo una tarea compleja.",src:"Univalle · 9. 11.",tr:{sk:"Pre Kolumbiu je to bezpochyby relevantný príklad, najmä teraz. Pri krehkosti podnikateľského prostredia však ide o zložitú úlohu.",en:"Undoubtedly a relevant reference for Colombia, especially now. Given how fragile the business fabric is, it remains a complex task."}},
+ {o:"Excelente expositor. Tema de frontera… Muchas gracias y felicitaciones!!!!",src:"Univalle · 9. 11.",tr:{sk:"Výborný prednášajúci. Téma na hrane poznania… Ďakujeme a gratulujeme!",en:"Excellent speaker. A frontier topic… Thank you and congratulations!"}},
+ {o:"Me quedó mucho más claro en esta segunda conferencia.",src:"Univalle · 11. 11.",tr:{sk:"Na tejto druhej prednáške mi to bolo oveľa jasnejšie.",en:"It became much clearer to me in this second lecture."}},
+ {o:"Maybe use more examples",src:"Javeriana · 10. 11.",con:1,tr:{sk:"Možno použiť viac príkladov.",es:"Quizás usar más ejemplos."}},
+ {o:"I really liked the way that the class was made, I think it is more the time limitations that left doubts.",src:"Javeriana · 10. 11.",con:1,tr:{sk:"Spôsob, akým bola hodina vedená, sa mi veľmi páčil; nejasnosti zostali skôr pre nedostatok času.",es:"Me gustó mucho cómo se dio la clase; creo que las dudas se deben más al poco tiempo."}},
+ {o:"Me hubiera gustado conocer un poco más de los impactos de la tasa mínima de impuestos.",src:"Univalle · 9. 11.",con:1,tr:{sk:"Rád by som sa dozvedel viac o dopadoch minimálnej sadzby dane.",en:"I would have liked to learn a bit more about the impacts of the minimum tax rate."}}
+];
+
+/* ============ helpers ============ */
+const $ = s => document.querySelector(s);
+const el = (tag,attrs={},html="") => { const e=document.createElement(tag); for(const[k,v] of Object.entries(attrs)) e.setAttribute(k,v); e.innerHTML=html; return e; };
+const linkUrl = key => key==="ytPosUrl"?`https://www.youtube.com/live/${LINKS.ytPos}`:key==="ytPreUrl"?`https://www.youtube.com/live/${LINKS.ytPre}`:key==="ytExtUrl"?`https://www.youtube.com/watch?v=${LINKS.ytExt}`:LINKS[key];
+const chips = arr => (arr||[]).filter(([,k])=>linkUrl(k)).map(([lab,k])=>`<a class="chip" href="${linkUrl(k)}" target="_blank" rel="noopener">${t(lab)} ↗</a>`).join("");
+const fmtDay = iso => { const d=new Date(iso+"T12:00:00"); return {wd:t("wd")[d.getDay()],n:d.getDate(),m:t("mo")[d.getMonth()===9?0:1]}; };
+const tip = $("#tip");
+function showTip(e,html){tip.innerHTML=html;tip.style.opacity=1;const x=Math.min(e.clientX+14,innerWidth-270);tip.style.left=x+"px";tip.style.top=(e.clientY+14)+"px"}
+function hideTip(){tip.style.opacity=0}
+
+/* ============ timeline ============ */
+let cur = 2, activeTypes = new Set(Object.keys(TYPES)), playing=null;
+function renderLegend(){
+  const lg=$("#legend"); lg.innerHTML="";
+  for(const [k,v] of Object.entries(TYPES)){
+    const b=el("button",{"aria-pressed":activeTypes.has(k)},`<span class="dot" style="background:${v.c}"></span>${tx(v.n)}`);
+    b.onclick=()=>{activeTypes.has(k)?activeTypes.delete(k):activeTypes.add(k); if(!activeTypes.size) activeTypes=new Set(Object.keys(TYPES)); renderLegend(); renderStrip(); renderPanel();};
+    lg.appendChild(b);
+  }
+}
+function renderStrip(){
+  const s=$("#strip"); s.innerHTML="";
+  DAYS.forEach((d,i)=>{
+    const f=fmtDay(d.d); let lab=f.n;
+    let mlab=f.m; if(d.span){const g=fmtDay(d.span); lab=`${f.n}-${g.n}`; if(g.m!==f.m) mlab=`${f.m}-${g.m}`;}
+    const types=[...new Set(d.ev.map(e=>e.type))].filter(x=>activeTypes.has(x));
+    const b=el("button",{class:"day",role:"tab","aria-selected":i===cur,style:d.span?"width:84px":""},
+      `<div class="dw">${f.wd}</div><div class="dn" style="${d.span?'font-size:20px':''}">${lab}</div><div class="dm">${mlab}</div><div class="dots">${types.map(x=>`<span class="dot" style="background:${TYPES[x].c}"></span>`).join("")}</div><div class="city">${CITIES[d.city].n}</div>`);
+    b.onclick=()=>{stopPlay(); select(i)};
+    s.appendChild(b);
+  });
+}
+function select(i,scroll=true){
+  cur=i; [...$("#strip").children].forEach((c,j)=>c.setAttribute("aria-selected",j===i));
+  if(scroll){const c=$("#strip").children[i]; c && c.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});}
+  renderPanel(); focusMap();
+}
+function renderPanel(){
+  const d=DAYS[cur], f=fmtDay(d.d);
+  let dateTxt=`${f.wd} ${f.n}. ${f.m} 2026`;
+  if(d.span){const g=fmtDay(d.span); dateTxt=`${f.n}. ${f.m} - ${g.n}. ${g.m} 2026`;}
+  const evs=d.ev.filter(e=>activeTypes.has(e.type));
+  const p=$("#panel");
+  p.innerHTML=`<div class="panel-head"><div><div class="eyebrow">${dateTxt}</div><h3>${tx(d.where)}</h3></div>
+   <div class="ctrls"><button class="btn" id="pv" aria-label="‹">‹</button><button class="btn primary" id="play">${playing?"■ "+t("stop"):"▶ "+t("play")}</button><button class="btn" id="nx" aria-label="›">›</button></div></div>
+   <ul class="events">${evs.map(e=>`<li class="ev" style="--evc:${TYPES[e.type].c}">
+     <div class="t">${e.time?`${e.time} <em>(${SK(e.time)} SK)</em>`:"&nbsp;"}<span class="k">${tx(TYPES[e.type].n)}</span></div>
+     <h4>${tx(e.title)}</h4>${e.desc?`<p>${tx(e.desc)}</p>`:""}${e.links?`<div class="links">${chips(e.links)}</div>`:""}</li>`).join("")}</ul>
+   ${d.photos?`<div class="eyebrow" style="margin-top:4px">${t("photos")}</div><div class="thumbs">${d.photos.map(ph=>{const v=ph.startsWith("v:");const k=v?ph.slice(2):ph;const src=v?`video/${k}.jpg`:`img/t/${k}.jpg`;const cap=tx((v?VID:PH)[k].t);return `<button data-media="${ph}" aria-label="${cap}"><img loading="lazy" src="${src}" alt="${cap}">${v?'<span class="play-badge">▶ video</span>':""}</button>`}).join("")}</div>`:""}`;
+  $("#pv").onclick=()=>{stopPlay();select((cur-1+DAYS.length)%DAYS.length)};
+  $("#nx").onclick=()=>{stopPlay();select((cur+1)%DAYS.length)};
+  $("#play").onclick=()=>playing?stopPlay():startPlay();
+  p.querySelectorAll("[data-media]").forEach(b=>b.onclick=()=>openLB(d.photos.map(toItem),d.photos.indexOf(b.dataset.media)));
+}
+function startPlay(){ playing=setInterval(()=>select((cur+1)%DAYS.length),4200); renderPanel(); }
+function stopPlay(){ if(playing){clearInterval(playing);playing=null;renderPanel();} }
+
+/* ============ map ============ */
+let map, markers={};
+function initMap(){
+  const LF=window.LF;if(!LF){$("#map").innerHTML="<p style='padding:20px'>Mapa sa nenačítala.</p>";return;}
+  map=LF.map("map",{scrollWheelZoom:false,zoomControl:true}).setView([4.9,-75.3],6);
+  LF.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',maxZoom:18}).addTo(map);
+  const C=CITIES, fl={color:"#7a7366",weight:2,dashArray:"5 7",opacity:.9}, rd={color:"#173a2e",weight:4,opacity:.85};
+  LF.polyline([C.bog.ll,C.clo.ll],fl).addTo(map);
+  LF.polyline([[3.4516,-76.532],[3.9,-76.3],[4.08,-76.19],[4.45,-75.9],[4.53,-75.68],[4.46,-75.55],[4.4389,-75.2322]],rd).addTo(map);
+  LF.polyline([C.ibe.ll,C.bog.ll,C.mde.ll],{...fl,opacity:.5}).addTo(map);
+  for(const [k,c] of Object.entries(C)){
+    const icon=LF.divIcon({className:"",html:`<div class="pin ${c.minor?"minor":""}" data-c="${k}"></div>`,iconSize:[18,18],iconAnchor:[9,9]});
+    const m=LF.marker(c.ll,{icon,title:c.n}).addTo(map);
+    m.bindTooltip(c.n,{permanent:true,direction:k==="clo"?"left":"right",offset:[k==="clo"?-10:10,0],className:"pin-label"});
+    m.on("click",()=>{stopPlay();const i=DAYS.findIndex(d=>d.city===k);if(i>=0)select(i);});
+    markers[k]=m;
+  }
+  map.fitBounds(Object.values(C).map(c=>c.ll),{padding:[40,40]});
+  focusMap();
+}
+function focusMap(){
+  if(!map) return; const k=DAYS[cur].city;
+  document.querySelectorAll(".pin").forEach(p=>p.classList.toggle("on",p.dataset.c===k));
+  if(markers[k]){Object.values(markers).forEach(m=>m.setZIndexOffset(0));markers[k].setZIndexOffset(1000);}
+}
+
+/* ============ lectures ============ */
+function renderLectures(){
+  $("#lectures").innerHTML=LECTURES.map(l=>`<article class="lec reveal">
+    <div class="ph" style="background-image:url(img/t/${l.img}.jpg)"></div>
+    <div class="bd"><div class="meta"><span class="tag" style="background:${TYPES[l.type].c}">${tx(TYPES[l.type].n)}</span><span>${l.date}</span><span>${l.city}</span></div>
+    <div class="inst">${l.inst}</div><h3>„${l.title}“</h3><p style="font-size:13px;color:var(--ink-3)">${tx(l.aud)}</p><p>${tx(l.desc)}</p>
+    ${l.score?`<div class="score"><b>${LANG==="en"?l.score.replace(",","."):l.score}</b>/5 · ${t("rating")} · n = ${l.n}</div>`:""}
+    <div class="links">${chips(l.links)}</div></div></article>`).join("");
+  observe();
+}
+
+/* ============ student charts ============ */
+const num = (x,d=1) => LANG==="en"?x.toFixed(d):x.toFixed(d).replace(".",",");
+function renderRatings(){
+  const box=$("#ratings"); box.innerHTML="";
+  RATINGS.forEach(r=>{
+    const row=el("div",{class:"bar-row"},`<div class="lab">${tx(r.k)}<small>${tx(r.s)}</small></div><div class="track"><div class="grid"></div><div class="fill" style="width:0"></div></div><div class="val">${num(r.m)}<small>n = ${r.n}</small></div>`);
+    const tipHtml=()=>`<b>${tx(r.k)} · ${tx(r.s)}</b><br>5 ★: ${r.dist[0]} · 4 ★: ${r.dist[1]} · 1-3 ★: ${r.dist[2]+r.dist[3]+r.dist[4]}<br>${t("rating")}: ${num(r.m,2)} / 5`;
+    row.onmousemove=e=>showTip(e,tipHtml()); row.onmouseleave=hideTip;
+    box.appendChild(row);
+    requestAnimationFrame(()=>setTimeout(()=>row.querySelector(".fill").style.width=(r.m/5*100)+"%",80));
+  });
+  $("#ratings-t").innerHTML=`<tr><th></th><th>5★</th><th>4★</th><th>n</th><th>Ø</th></tr>`+RATINGS.map(r=>`<tr><td>${tx(r.k)}, ${tx(r.s)}</td><td>${r.dist[0]}</td><td>${r.dist[1]}</td><td>${r.n}</td><td>${num(r.m,2)}</td></tr>`).join("");
+  $("#stars").innerHTML=Array.from({length:5},(_,i)=>`<svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z" fill="${i<4?'#f2b705':'url(#g)'}"/>${i===4?'<defs><linearGradient id="g"><stop offset="90%" stop-color="#f2b705"/><stop offset="90%" stop-color="rgba(255,255,255,.25)"/></linearGradient></defs>':''}</svg>`).join("");
+}
+function renderShift(){
+  $("#shift").innerHTML=SHIFT.map(s=>`<div><div class="q">${tx(s.q)}<small>${tx(s.s)}</small></div>
+    <div class="pair" data-v="${s.b}"><span>${t("before")}</span><div class="track"><div class="grid"></div><div class="fill b" style="width:0"></div></div><b class="mono">${s.b} %</b></div>
+    <div class="pair" data-v="${s.a}"><span>${t("after")}</span><div class="track"><div class="grid"></div><div class="fill a" style="width:0"></div></div><b class="mono">${s.a} %</b></div></div>`).join("");
+  setTimeout(()=>document.querySelectorAll("#shift .pair").forEach(p=>{p.querySelector(".fill").style.width=p.dataset.v+"%"; p.onmousemove=e=>showTip(e,`${p.firstElementChild.textContent}: ${p.dataset.v} %`); p.onmouseleave=hideTip;}),80);
+}
+function renderQuiz(){
+  const box=$("#quiz"); box.innerHTML="";
+  QUIZ.forEach(q=>{
+    const row=el("div",{class:"bar-row",style:"grid-template-columns:1fr 120px 52px"},`<div class="lab">${tx(q.k)}<small>${q.s}</small></div><div class="track"><div class="grid"></div><div class="fill" style="width:0"></div></div><div class="val">${q.v} %</div>`);
+    row.onmousemove=e=>showTip(e,`${tx(q.k)}<br>${q.v} % ${t("correct")} · ${q.s}`); row.onmouseleave=hideTip;
+    box.appendChild(row); setTimeout(()=>row.querySelector(".fill").style.width=q.v+"%",80);
+  });
+  $("#quiz-t").innerHTML=QUIZ.map(q=>`<tr><td>${tx(q.k)} (${q.s})</td><td>${q.v} %</td></tr>`).join("");
+}
+function renderQuotes(){
+  $("#qtrack").innerHTML=QUOTES.map(q=>{const tr=q.tr[LANG];return `<div class="qcard ${q.con?"con":""}"><blockquote>${q.o}</blockquote>${tr?`<div class="tr">${tr}</div>`:""}<div class="src"><span>${q.src}</span>${q.con?`<b>${{sk:"podnet na zlepšenie",es:"sugerencia",en:"room to improve"}[LANG]}</b>`:""}</div></div>`}).join("");
+}
+$("#qprev").onclick=()=>$("#qtrack").scrollBy({left:-400,behavior:"smooth"});
+$("#qnext").onclick=()=>$("#qtrack").scrollBy({left:400,behavior:"smooth"});
+
+/* ============ gallery ============ */
+let gFilter="all";
+const ALL_MEDIA=[...Object.keys(PH).map(k=>"p:"+k),...Object.keys(VID).map(k=>"v:"+k)];
+function toItem(ph){const v=ph.startsWith("v:");const k=ph.replace(/^[pv]:/,"");const m=(v?VID:PH)[k];return {v,k,src:v?`video/${k}.mp4`:`img/${k}.jpg`,poster:v?`video/${k}.jpg`:null,cap:tx(m.t),meta:`${tx(GROUPS[m.c])} · ${m.d} 2026`};}
+function renderFilters(){
+  const f=$("#filters"); f.innerHTML="";
+  [["all",t("all")],...Object.entries(GROUPS).map(([k,v])=>[k,tx(v)])].forEach(([k,lab])=>{
+    const b=el("button",{"aria-pressed":gFilter===k},lab); b.onclick=()=>{gFilter=k;renderFilters();renderGallery();}; f.appendChild(b);
+  });
+}
+function renderGallery(){
+  const list=ALL_MEDIA.filter(ph=>{const v=ph.startsWith("v:");const k=ph.slice(2);return gFilter==="all"||(v?VID:PH)[k].c===gFilter;});
+  // interleave videos after the first photos of their group
+  const m=$("#masonry"); m.innerHTML="";
+  list.forEach((ph,i)=>{const it=toItem(ph);
+    const fig=el("figure",{tabindex:0},`<img loading="lazy" src="${it.v?it.poster:"img/t/"+it.k+".jpg"}" alt="${it.cap}">${it.v?'<span class="play-badge">▶ video</span>':""}<figcaption>${it.cap}</figcaption>`);
+    fig.onclick=()=>openLB(list.map(toItem),i); fig.onkeydown=e=>{if(e.key==="Enter")openLB(list.map(toItem),i)};
+    m.appendChild(fig);});
+}
+
+/* ============ lightbox ============ */
+let lbItems=[],lbI=0;
+function openLB(items,i){lbItems=items.map(x=>typeof x==="string"?toItem(x):x);lbI=i;drawLB();$("#lb").classList.add("open");document.body.style.overflow="hidden";}
+function drawLB(){const it=lbItems[lbI];$("#lbfig").innerHTML=(it.v?`<video src="${it.src}" poster="${it.poster}" controls autoplay playsinline></video>`:`<img src="${it.src}" alt="${it.cap}">`)+`<figcaption>${it.cap}<small>${it.meta} · ${lbI+1}/${lbItems.length}</small></figcaption>`;}
+function closeLB(){$("#lb").classList.remove("open");$("#lbfig").innerHTML="";document.body.style.overflow="";}
+$("#lb .x").onclick=closeLB;
+$("#lb .pv").onclick=e=>{e.stopPropagation();lbI=(lbI-1+lbItems.length)%lbItems.length;drawLB();};
+$("#lb .nx").onclick=e=>{e.stopPropagation();lbI=(lbI+1)%lbItems.length;drawLB();};
+$("#lb").onclick=e=>{if(e.target.id==="lb")closeLB();};
+addEventListener("keydown",e=>{if(!$("#lb").classList.contains("open"))return;if(e.key==="Escape")closeLB();if(e.key==="ArrowRight")$("#lb .nx").click();if(e.key==="ArrowLeft")$("#lb .pv").click();});
+
+/* ============ media ============ */
+function renderMedia(){
+  const yt=[[LINKS.ytPos,{sk:"Univalle, 9. 11.: Impuesto mínimo global y renta corporativa (postgraduál, záznam živého prenosu)",es:"Univalle, 9.11: Impuesto mínimo global y renta corporativa (posgrado, transmisión)",en:"Univalle, 9 Nov: Global minimum tax and corporate income (postgraduate, livestream)"},"live"],
+            [LINKS.ytPre,{sk:"Univalle, 11. 11.: Tributación global y su importancia para el contador público (bakalári, záznam)",es:"Univalle, 11.11: Tributación global y su importancia para el contador público (pregrado)",en:"Univalle, 11 Nov: Global taxation and why it matters to the public accountant (undergraduate)"},"live"],
+            [LINKS.ytExt,{sk:"Externado: Diálogos internacionales - retos y futuro de la profesión contable (rozhovor, 3:11)",es:"Externado: Diálogos internacionales - retos y futuro de la profesión contable (3:11)",en:"Externado: International dialogues - challenges and future of the accounting profession (3:11)"},"watch"]];
+  $("#yt").innerHTML=yt.map(([id,cap])=>`<div class="mcard"><button class="yt" data-id="${id}" aria-label="Play"><img loading="lazy" src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt=""><span class="pl"><span><svg width="22" height="22" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#111"/></svg></span></span></button><div class="bd"><h3>${tx(cap)}</h3><p>YouTube</p></div></div>`).join("")
+   +`<a class="mcard reel" href="${LINKS.fbExternado}" target="_blank" rel="noopener"><img src="img/fb-externado.jpg" alt=""><div class="bd"><span class="eyebrow">Facebook · reel 1:04</span><h3>${tx({sk:"Nelson Dueñas (Externado) sa rozpráva s Antonom Marcim",es:"Nelson Dueñas (Externado) conversa con Anton Marci",en:"Nelson Dueñas (Externado) talks with Anton Marci"})}</h3><p>Facultad de Contaduría Pública, Universidad Externado</p><span class="chip" style="align-self:start">${t("watch_fb")} ↗</span></div></a>`
+   +`<a class="mcard reel" href="${LINKS.fbUniminuto}" target="_blank" rel="noopener"><img src="img/fb-uniminuto.jpg" alt=""><div class="bd"><span class="eyebrow">Facebook · reel 2:19</span><h3>${tx({sk:"UNIMINUTO Tolima: centrum globálnej účtovníckej debaty na REDICEAC 2026",es:"¡UNIMINUTO Tolima fue el epicentro del debate contable global con el REDICEAC 2026!",en:"UNIMINUTO Tolima: the hub of the global accounting debate at REDICEAC 2026"})}</h3><p>UNIMINUTO Tolima - Huila</p><span class="chip" style="align-self:start">${t("watch_fb")} ↗</span></div></a>`;
+  document.querySelectorAll(".yt").forEach(b=>b.onclick=()=>{b.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="YouTube"></iframe>`;});
+  $("#vids").innerHTML=Object.entries(VID).map(([k,v])=>`<button data-v="${k}"><img loading="lazy" src="video/${k}.jpg" alt="${tx(v.t)}"><div class="cap"><b>▶ ${tx(v.t)}</b>${tx(GROUPS[v.c])} · ${v.d}</div></button>`).join("");
+  document.querySelectorAll("#vids button").forEach((b,i)=>b.onclick=()=>openLB(Object.keys(VID).map(k=>"v:"+k),i));
+  const res=[[LINKS.research,{sk:"Výskumná stránka REDICEAC 2026",es:"Página de investigación REDICEAC 2026",en:"REDICEAC 2026 research page"},"impuestos-minimos-rediceac.vercel.app"],
+    [LINKS.zenodo,{sk:"Dataset piatich krajín (Zenodo)",es:"Datos de cinco países (Zenodo)",en:"Five-country dataset (Zenodo)"},"doi.org/10.5281/zenodo.23328853"],
+    [LINKS.externadoApp,{sk:"Aplikácia pre študentov Externado",es:"Aplicación para estudiantes del Externado",en:"Externado student app"},"externado-impuestos.vercel.app"],
+    [LINKS.univalleApp,{sk:"Aplikácia pre študentov Univalle",es:"Aplicación para estudiantes de Univalle",en:"Univalle student app"},"univalle-impuestos.vercel.app"],
+    [LINKS.javerianaApp,{sk:"Aplikácia pre študentov Javeriana Cali",es:"Aplicación para estudiantes de la Javeriana Cali",en:"Javeriana Cali student app"},(LINKS.javerianaApp||"").replace("https://","")],
+    [LINKS.fbRediceac,{sk:"Fotoreportáž REDICEAC z kongresu",es:"Así vivimos el congreso (REDICEAC)",en:"REDICEAC photo report from the congress"},"facebook.com/rediceac"]];
+  $("#res").innerHTML=res.filter(r=>r[0]).map(([u,lab,s])=>`<a href="${u}" target="_blank" rel="noopener"><b>${tx(lab)} ↗</b><small>${s}</small></a>`).join("");
+}
+
+/* ============ i18n apply ============ */
+function applyLang(lg){
+  LANG=lg; document.documentElement.lang=lg;
+  document.querySelectorAll("[data-i18n]").forEach(e=>{const v=T[e.dataset.i18n]; if(v) e.innerHTML=tx(v);});
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lg));
+  document.querySelectorAll(".dec").forEach(e=>e.textContent=lg==="en"?e.dataset.v:e.dataset.v.replace(".",","));
+  renderLegend(); renderStrip(); renderPanel(); renderLectures(); renderRatings(); renderShift(); renderQuiz(); renderQuotes(); renderFilters(); renderGallery(); renderMedia();
+  try{localStorage.setItem("lang",lg)}catch(e){}
+}
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>applyLang(b.dataset.lang));
+
+/* ============ reveal ============ */
+let io;
+function observe(){
+  if(!("IntersectionObserver" in window)){document.querySelectorAll(".reveal").forEach(e=>e.classList.add("in"));return;}
+  io=io||new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}}),{threshold:.12});
+  document.querySelectorAll(".reveal:not(.in)").forEach(e=>io.observe(e));
+}
+
+/* ============ init ============ */
+let start=null; try{start=localStorage.getItem("lang")}catch(e){}
+if(!["sk","es","en"].includes(start)) start=(navigator.language||"").toLowerCase().startsWith("es")?"es":"sk";
+applyLang(start);
+initMap();
+observe();
+</script>
+</body>
+</html>
